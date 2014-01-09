@@ -4,7 +4,7 @@ Yii2 Scroll Pager
 [Yii2 Scroll Pager (Y2SP)](http://kop.github.io/yii2-scroll-pager) turns your regular paginated page into an
 infinite scrolling page using AJAX.
 
-ScrollPager works with a `Pagination` object which specifies the totally number of pages and the current page number.
+Y2SP works with a `Pagination` object which specifies the totally number of pages and the current page number.
 
 Pager is build with help of [JQuery Infinite Ajax Scroll plugin](https://github.com/webcreate/infinite-ajax-scroll).
 
@@ -121,9 +121,9 @@ The use of hashes can be problematic in some cases, in which case you can disabl
 
 ### `scrollContainer`
 
-*Default:* $(window)
+*Default:* `$(window)`
 
-By default, scroll events are listened from the $(window) object.
+By default, scroll events are listened from the `$(window)` object.
 You can use this setting to specify a custom container, for example a div with overflow.
 
 
