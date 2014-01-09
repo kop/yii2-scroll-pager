@@ -3,5 +3,6 @@
 #       They should always be ignored in the repository.       #
 #===============================================================
 
+.idea/
 vendor/
 composer.lock
