@@ -32,9 +32,172 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h1>
-<a name="yii2-scroll-pager" class="anchor" href="#yii2-scroll-pager"><span class="octicon octicon-link"></span></a>yii2-scroll-pager</h1>
+<a name="yii2-scroll-pager" class="anchor" href="#yii2-scroll-pager"><span class="octicon octicon-link"></span></a>Yii2 Scroll Pager</h1>
 
-<p>Infinite AJAX scrolling for Yii2 ListView widget</p>
+<p><a href="http://kop.github.io/yii2-scroll-pager">Yii2 Scroll Pager (Y2SP)</a> turns your regular paginated page into an
+infinite scrolling page using AJAX.</p>
+
+<p>Y2SP works with a <code>Pagination</code> object which specifies the totally number of pages and the current page number.</p>
+
+<p>Pager is build with help of <a href="https://github.com/webcreate/infinite-ajax-scroll">JQuery Infinite Ajax Scroll plugin</a>.</p>
+
+<h2>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li>Yii 2.0 (dev-master)</li>
+<li>PHP 5.4</li>
+</ul><blockquote>
+<p>Note:
+This extension mandatorily requires <a href="https://github.com/yiisoft/yii2">Yii Framework 2</a>.
+The framework is under active development and the first stable release of Yii 2 is expected in early 2014.</p>
+</blockquote>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>The preferred way to install this extension is through <a href="http://getcomposer.org/">Composer</a>.</p>
+
+<p>Either run</p>
+
+<p><code>php composer.phar require kop/yii2-scroll-pager "dev-master"</code></p>
+
+<p>or add</p>
+
+<p><code>"kop/yii2-scroll-pager": "dev-master"</code></p>
+
+<p>to the <code>require</code> section of your <code>composer.json</code> file.</p>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Just pass the ScrollPager class name to the ListView <code>pager</code> configuration.
+Make sure that items in your list have some classes that can be used as JavaScript selectors.</p>
+
+<div class="highlight highlight-php"><pre><span class="k">echo</span> <span class="nx">ListView</span><span class="o">::</span><span class="na">widget</span><span class="p">([</span>
+     <span class="s1">'dataProvider'</span> <span class="o">=&gt;</span> <span class="nv">$dataProvider</span><span class="p">,</span>
+     <span class="s1">'itemOptions'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="s1">'item'</span><span class="p">],</span>
+     <span class="s1">'itemView'</span> <span class="o">=&gt;</span> <span class="s1">'_item_view'</span><span class="p">,</span>
+     <span class="s1">'pager'</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'class'</span> <span class="o">=&gt;</span> <span class="nx">\kop\y2sp\ScrollPager</span><span class="o">::</span><span class="na">className</span><span class="p">()]</span>
+<span class="p">]);</span>
+</pre></div>
+
+<h2>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<h3>
+<a name="container" class="anchor" href="#container"><span class="octicon octicon-link"></span></a><code>container</code>
+</h3>
+
+<p><em>Default:</em> ".list-view"</p>
+
+<p>Enter the selector of the element containing your items that you want to paginate.</p>
+
+<h3>
+<a name="item" class="anchor" href="#item"><span class="octicon octicon-link"></span></a><code>item</code>
+</h3>
+
+<p><em>Default:</em> ".item"</p>
+
+<p>Enter the selector of the element that each item has. Make sure the elements are inside the container element.</p>
+
+<h3>
+<a name="noneleft" class="anchor" href="#noneleft"><span class="octicon octicon-link"></span></a><code>noneLeft</code>
+</h3>
+
+<p><em>Default:</em> false</p>
+
+<p>Contains the message to be displayed when there are no more pages left to load.</p>
+
+<h3>
+<a name="loader" class="anchor" href="#loader"><span class="octicon octicon-link"></span></a><code>loader</code>
+</h3>
+
+<p><em>Default:</em> <code>&lt;img src="images/loader.gif"/&gt;</code> <img src="https://raw2.github.com/kop/yii2-scroll-pager/master/assets/infinite-ajax-scroll/images/loader.gif" alt="Spinner Image"></p>
+
+<p>Loader spinner. This HTML element will be displayed when the next page with items is loaded via AJAX.</p>
+
+<h3>
+<a name="loaderdelay" class="anchor" href="#loaderdelay"><span class="octicon octicon-link"></span></a><code>loaderDelay</code>
+</h3>
+
+<p><em>Default:</em> 600</p>
+
+<p>Minimal time (in milliseconds) the loader should be displayed before rendering the items of the next page.
+Note: This setting will <em>not</em> actually delay the the loading of items itself.</p>
+
+<h3>
+<a name="triggerpagethreshold" class="anchor" href="#triggerpagethreshold"><span class="octicon octicon-link"></span></a><code>triggerPageThreshold</code>
+</h3>
+
+<p><em>Default:</em> 3</p>
+
+<p>Page number after which a 'Load more items' link is displayed.
+Users will manually trigger the loading of the next page by clicking this link.</p>
+
+<h3>
+<a name="trigger" class="anchor" href="#trigger"><span class="octicon octicon-link"></span></a><code>trigger</code>
+</h3>
+
+<p><em>Default:</em> "Load more items"</p>
+
+<p>Text of the manual trigger link.</p>
+
+<h3>
+<a name="thresholdmargin" class="anchor" href="#thresholdmargin"><span class="octicon octicon-link"></span></a><code>thresholdMargin</code>
+</h3>
+
+<p><em>Default:</em> 0</p>
+
+<p>On default IAS starts loading new items when you scroll to the latest .item element.
+The thresholdMargin will be added to the items' offset, giving you the ability to load new items earlier
+(please note that the margin should be a negative integer for this case).</p>
+
+<p>For example:</p>
+
+<p>Setting a thresholdMargin of -250 means that IAS will start loading 250 pixel <em>before</em> the last item has scrolled into view.
+A positive margin means that IAS will load new items N pixels after the last item.</p>
+
+<h3>
+<a name="history" class="anchor" href="#history"><span class="octicon octicon-link"></span></a><code>history</code>
+</h3>
+
+<p><em>Default:</em> true</p>
+
+<p>Set this to false to disable the history module.</p>
+
+<p>The IAS history module uses hashes (in the format "#/page/") to remember the last viewed page,
+so when a visitor hits the back button after visiting an item from that page,
+it will load all items up to that last page and scrolls it into view.
+The use of hashes can be problematic in some cases, in which case you can disable this feature.</p>
+
+<h3>
+<a name="scrollcontainer" class="anchor" href="#scrollcontainer"><span class="octicon octicon-link"></span></a><code>scrollContainer</code>
+</h3>
+
+<p><em>Default:</em> <code>$(window)</code></p>
+
+<p>By default, scroll events are listened from the <code>$(window)</code> object.
+You can use this setting to specify a custom container, for example a div with overflow.</p>
+
+<h2>
+<a name="report" class="anchor" href="#report"><span class="octicon octicon-link"></span></a>Report</h2>
+
+<ul>
+<li>Report any issues <a href="https://github.com/kop/yii2-scroll-pager/issues">on the GitHub</a>.</li>
+</ul><h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p><strong>yii2-scroll-pager</strong> is released under the MIT License. See the bundled <code>LICENSE.md</code> for details.</p>
+
+<h2>
+<a name="resources" class="anchor" href="#resources"><span class="octicon octicon-link"></span></a>Resources</h2>
+
+<ul>
+<li><a href="http://kop.github.io/yii2-scroll-pager">Project Page</a></li>
+<li><a href="https://packagist.org/packages/kop/yii2-scroll-pager">Packagist Package</a></li>
+<li><a href="https://github.com/kop/yii2-scroll-pager">Source Code</a></li>
+</ul>
       </section>
     </div>
 
