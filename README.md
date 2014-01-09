@@ -1,5 +1,5 @@
 Yii2 Scroll Pager
-==========================
+=================
 
 [Yii2 Scroll Pager (Y2SP)](http://kop.github.io/yii2-scroll-pager) turns your regular paginated page into an
 infinite scrolling page using AJAX.
