@@ -88,7 +88,7 @@ class ScrollPager extends Widget
      * <i>For example:</i>
      * <br>
      * Setting a thresholdMargin of -250 means that IAS will start loading 250 pixel before the last item has scrolled
-     * into view. A positive margin means that IAS will laod new items N pixels after the last item.
+     * into view. A positive margin means that IAS will load new items N pixels after the last item.
      */
     public $thresholdMargin = 0;
 
