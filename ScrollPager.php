@@ -2,6 +2,7 @@
 
 namespace kop\y2sp;
 
+use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\web\View;
 use yii\base\Widget;
@@ -56,7 +57,7 @@ class ScrollPager extends Widget
      * @var string $loader Loader spinner.
      * This HTML element will be displayed when the next page with items is loaded via AJAX.
      */
-    public $loader = 'Loading...';
+    public $loader;
 
     /**
      * @var int $loaderDelay Minimal time (in milliseconds) the loader should be displayed before rendering the
@@ -116,6 +117,12 @@ class ScrollPager extends Widget
     {
         // Register required assets
         InfiniteAjaxScrollAsset::register($this->view);
+        $bundleUrl = $this->view->getAssetManager()->getPublishedUrl((new InfiniteAjaxScrollAsset())->sourcePath);
+
+        // Set default loader spinner if not set
+        if ($this->loader === null) {
+            $this->loader = Html::img("{$bundleUrl}/images/loader.gif", 'Loading...');
+        }
 
         // Initialize jQuery IAS plugin
         $pluginSettings = Json::encode([
