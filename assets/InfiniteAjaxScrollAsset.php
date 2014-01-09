@@ -43,10 +43,10 @@ class InfiniteAjaxScrollAsset extends AssetBundle
      */
     public function init()
     {
-        parent::init();
-
         $this->js = [
             (YII_DEBUG) ? 'jquery-ias.js' : 'jquery-ias.min.js'
         ];
+
+        parent::init();
     }
 }
