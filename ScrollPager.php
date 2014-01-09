@@ -2,13 +2,17 @@
 
 namespace kop\y2sp;
 
-use yii\helpers\Html;
-use yii\helpers\Json;
+use Yii;
 use yii\web\View;
 use yii\base\Widget;
+use yii\helpers\Html;
+use yii\helpers\Json;
 use yii\web\JsExpression;
 use yii\widgets\LinkPager;
+use yii\helpers\ArrayHelper;
+use yii\i18n\PhpMessageSource;
 use kop\y2sp\assets\InfiniteAjaxScrollAsset;
+
 
 /**
  * ScrollPager turns your regular paginated page into an infinite scrolling page using AJAX.
@@ -74,7 +78,7 @@ class ScrollPager extends Widget
     /**
      * @var string $trigger Text of the manual trigger link.
      */
-    public $trigger = 'Load more items';
+    public $trigger;
 
     /**
      * @var int $thresholdMargin On default IAS starts loading new items when you scroll to the latest .item element.
@@ -109,21 +113,45 @@ class ScrollPager extends Widget
     public $pagination;
 
     /**
+     * Initializes the pager.
+     */
+    public function init()
+    {
+        parent::init();
+
+        // Register translations source
+        Yii::$app->i18n->translations = ArrayHelper::merge(Yii::$app->i18n->translations, [
+            'kop\y2sp' => [
+                'class' => PhpMessageSource::className(),
+                'basePath' => '@vendor/kop/yii2-scroll-pager/kop/y2sp/messages',
+                'fileMap' => [
+                    'kop\y2sp' => 'general.php'
+                ]
+            ]
+        ]);
+
+        // Register required assets
+        InfiniteAjaxScrollAsset::register($this->view);
+        $bundleUrl = $this->view->assetManager->getPublishedUrl((new InfiniteAjaxScrollAsset())->sourcePath);
+
+        // Set default loader spinner if not set
+        if ($this->loader === null) {
+            $this->loader = Html::img("{$bundleUrl}/images/loader.gif");
+        }
+
+        // Set default trigger text if not set
+        if ($this->trigger === null) {
+            $this->trigger = Yii::t('kop\y2sp', 'Load more items');
+        }
+    }
+
+    /**
      * Executes the widget.
      *
      * This overrides the parent implementation by initializing jQuery IAS and displaying the generated page buttons.
      */
     public function run()
     {
-        // Register required assets
-        InfiniteAjaxScrollAsset::register($this->view);
-        $bundleUrl = $this->view->getAssetManager()->getPublishedUrl((new InfiniteAjaxScrollAsset())->sourcePath);
-
-        // Set default loader spinner if not set
-        if ($this->loader === null) {
-            $this->loader = Html::img("{$bundleUrl}/images/loader.gif", 'Loading...');
-        }
-
         // Initialize jQuery IAS plugin
         $pluginSettings = Json::encode([
             'container' => $this->container,
@@ -137,9 +165,9 @@ class ScrollPager extends Widget
             'trigger' => $this->trigger,
             'tresholdMargin' => $this->thresholdMargin,
             'history' => $this->history,
-            'scrollContainer' => $this->scrollContainer
+            'scrollContainer' => new JsExpression($this->scrollContainer)
         ]);
-        $this->view->registerJs(new JsExpression("jQuery.ias({$pluginSettings});"), View::POS_READY);
+        $this->view->registerJs("jQuery.ias({$pluginSettings});", View::POS_READY);
 
         // Render pagination links
         echo LinkPager::widget([
