@@ -1,0 +1,7 @@
+#==============================================================#
+# Composer dependencies are used for development comfort only. #
+#       They should always be ignored in the repository.       #
+#===============================================================
+
+vendor/
+composer.lock
