@@ -2,7 +2,7 @@
     "name": "kop/yii2-scroll-pager",
     "description": "Infinite AJAX scrolling for Yii2 ListView widget",
     "homepage": "http://kop.github.io/yii2-scroll-pager/",
-    "keywords": ["yii", "yii2", "scroll", "pager"],
+    "keywords": ["yii", "yii2", "scroll", "scrolling", "pager", "pagination"],
     "type": "yii2-extension",
     "license": "MIT",
     "support": {
