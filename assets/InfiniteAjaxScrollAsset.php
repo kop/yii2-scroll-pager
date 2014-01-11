@@ -20,7 +20,7 @@ class InfiniteAjaxScrollAsset extends AssetBundle
     /**
      * @var string The root directory of the source asset files.
      */
-    public $sourcePath = '@vendor/kop/yii2-scroll-pager/kop/y2sp/assets/infinite-ajax-scroll';
+    public $sourcePath = '@vendor/kop/yii2-scroll-pager/assets/infinite-ajax-scroll';
 
     /**
      * @var array List of bundle class names that this bundle depends on.
