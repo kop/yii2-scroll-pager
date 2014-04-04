@@ -86,7 +86,16 @@ Setting a negativeMargin of 250 means that IAS will start loading 250 pixel befo
 
 #### `enabledExtensions`
 
-*Default:* Array(ScrollPager::EXTENSION_TRIGGER, ScrollPager::EXTENSION_SPINNER, ScrollPager::EXTENSION_NONE_LEFT, ScrollPager::EXTENSION_PAGING, ScrollPager::EXTENSION_HISTORY)
+*Default:*
+`
+Array(
+    ScrollPager::EXTENSION_TRIGGER,
+    ScrollPager::EXTENSION_SPINNER,
+    ScrollPager::EXTENSION_NONE_LEFT,
+    ScrollPager::EXTENSION_PAGING,
+    ScrollPager::EXTENSION_HISTORY
+)
+`
 
 The list of the enabled plugin extensions.
 
@@ -100,7 +109,7 @@ Text of trigger the link.
 
 #### `triggerTemplate`
 
-*Default:* "<div class="ias-trigger" style="text-align: center; cursor: pointer;"><a>{text}</a></div>"
+*Default:* "`<div class="ias-trigger" style="text-align: center; cursor: pointer;"><a>{text}</a></div>`"
 
 Allows you to override the trigger html template.
 
@@ -120,7 +129,7 @@ The src attribute of the spinner image.
 
 #### `spinnerTemplate`
 
-*Default:* "<div class="ias-spinner" style="text-align: center;"><img src="{src}"/></div>"
+*Default:* "`<div class="ias-spinner" style="text-align: center;"><img src="{src}"/></div>`"
 
 Allows you to override the spinner html template.
 
@@ -132,7 +141,7 @@ Text of the "nothing left" message.
 
 #### `noneLeftTemplate`
 
-*Default:* "<div class="ias-noneleft" style="text-align: center;">{text}</div>"
+*Default:* "`<div class="ias-noneleft" style="text-align: center;">{text}</div>`"
 
 Allows you to override the "nothing left" message html template.
 
