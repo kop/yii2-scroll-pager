@@ -13,7 +13,7 @@ use yii\web\AssetBundle;
  * @license   https://github.com/kop/yii2-scroll-pager/blob/master/LICENSE.md MIT
  *
  * @author    Ivan Koptiev <ikoptev@gmail.com>
- * @version   1.0.2
+ * @version   2.1.0
  */
 class InfiniteAjaxScrollAsset extends AssetBundle
 {
@@ -30,21 +30,9 @@ class InfiniteAjaxScrollAsset extends AssetBundle
     ];
 
     /**
-     * @var array List of CSS files that this bundle contains.
+     * @var array $js List of CSS files that this bundle contains.
      */
-    public $css = [
-        'css/jquery.ias.css'
+    public $js = [
+        'jquery.ias.min.js'
     ];
-
-    /**
-     * Initializes the bundle.
-     */
-    public function init()
-    {
-        $this->js = [
-            (YII_DEBUG) ? 'jquery-ias.js' : 'jquery-ias.min.js'
-        ];
-
-        parent::init();
-    }
 }
