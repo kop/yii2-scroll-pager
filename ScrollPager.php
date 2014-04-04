@@ -171,7 +171,10 @@ class ScrollPager extends Widget
 
         // Render pagination links
         echo LinkPager::widget([
-            'pagination' => $this->pagination
+            'pagination' => $this->pagination,
+            'options' => [
+                'class' => 'pagination hidden'
+            ]
         ]);
     }
 }
