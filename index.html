@@ -86,99 +86,216 @@ Make sure that items in your list have some classes that can be used as JavaScri
 <a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
 
 <h3>
+<a name="general-options" class="anchor" href="#general-options"><span class="octicon octicon-link"></span></a>General Options</h3>
+
+<h4>
 <a name="container" class="anchor" href="#container"><span class="octicon octicon-link"></span></a><code>container</code>
-</h3>
+</h4>
 
 <p><em>Default:</em> ".list-view"</p>
 
 <p>Enter the selector of the element containing your items that you want to paginate.</p>
 
-<h3>
+<h4>
 <a name="item" class="anchor" href="#item"><span class="octicon octicon-link"></span></a><code>item</code>
-</h3>
+</h4>
 
 <p><em>Default:</em> ".item"</p>
 
 <p>Enter the selector of the element that each item has. Make sure the elements are inside the container element.</p>
 
-<h3>
-<a name="noneleft" class="anchor" href="#noneleft"><span class="octicon octicon-link"></span></a><code>noneLeft</code>
-</h3>
-
-<p><em>Default:</em> false</p>
-
-<p>Contains the message to be displayed when there are no more pages left to load.</p>
-
-<h3>
-<a name="loader" class="anchor" href="#loader"><span class="octicon octicon-link"></span></a><code>loader</code>
-</h3>
-
-<p><em>Default:</em> <code>&lt;img src="images/loader.gif"/&gt;</code> <img src="https://raw2.github.com/kop/yii2-scroll-pager/master/assets/infinite-ajax-scroll/images/loader.gif" alt="Spinner Image"></p>
-
-<p>Loader spinner. This HTML element will be displayed when the next page with items is loaded via AJAX.</p>
-
-<h3>
-<a name="loaderdelay" class="anchor" href="#loaderdelay"><span class="octicon octicon-link"></span></a><code>loaderDelay</code>
-</h3>
+<h4>
+<a name="delay" class="anchor" href="#delay"><span class="octicon octicon-link"></span></a><code>delay</code>
+</h4>
 
 <p><em>Default:</em> 600</p>
 
-<p>Minimal time (in milliseconds) the loader should be displayed before rendering the items of the next page.
-Note: This setting will <em>not</em> actually delay the the loading of items itself.</p>
+<p>Minimal number of milliseconds to stay in a loading state.</p>
 
-<h3>
-<a name="triggerpagethreshold" class="anchor" href="#triggerpagethreshold"><span class="octicon octicon-link"></span></a><code>triggerPageThreshold</code>
-</h3>
+<h4>
+<a name="negativemargin" class="anchor" href="#negativemargin"><span class="octicon octicon-link"></span></a><code>negativeMargin</code>
+</h4>
 
-<p><em>Default:</em> 3</p>
-
-<p>Page number after which a 'Load more items' link is displayed.
-Users will manually trigger the loading of the next page by clicking this link.</p>
-
-<h3>
-<a name="trigger" class="anchor" href="#trigger"><span class="octicon octicon-link"></span></a><code>trigger</code>
-</h3>
-
-<p><em>Default:</em> "Load more items"</p>
-
-<p>Text of the manual trigger link.</p>
-
-<h3>
-<a name="thresholdmargin" class="anchor" href="#thresholdmargin"><span class="octicon octicon-link"></span></a><code>thresholdMargin</code>
-</h3>
-
-<p><em>Default:</em> 0</p>
+<p><em>Default:</em> 10</p>
 
 <p>On default IAS starts loading new items when you scroll to the latest .item element.
-The thresholdMargin will be added to the items' offset, giving you the ability to load new items earlier
-(please note that the margin should be a negative integer for this case).</p>
+The negativeMargin will be added to the items' offset, giving you the ability to load new items earlier (please note that the margin is always transformed to a negative integer).</p>
 
 <p>For example:</p>
 
-<p>Setting a thresholdMargin of -250 means that IAS will start loading 250 pixel <em>before</em> the last item has scrolled into view.
-A positive margin means that IAS will load new items N pixels after the last item.</p>
+<p>Setting a negativeMargin of 250 means that IAS will start loading 250 pixel before the last item has scrolled into view.</p>
 
 <h3>
-<a name="history" class="anchor" href="#history"><span class="octicon octicon-link"></span></a><code>history</code>
-</h3>
+<a name="extensions" class="anchor" href="#extensions"><span class="octicon octicon-link"></span></a>Extensions</h3>
 
-<p><em>Default:</em> true</p>
+<h4>
+<a name="enabledextensions" class="anchor" href="#enabledextensions"><span class="octicon octicon-link"></span></a><code>enabledExtensions</code>
+</h4>
 
-<p>Set this to false to disable the history module.</p>
+<p><em>Default:</em>
+<code>
+Array(
+    ScrollPager::EXTENSION_TRIGGER,
+    ScrollPager::EXTENSION_SPINNER,
+    ScrollPager::EXTENSION_NONE_LEFT,
+    ScrollPager::EXTENSION_PAGING,
+    ScrollPager::EXTENSION_HISTORY
+)
+</code></p>
 
-<p>The IAS history module uses hashes (in the format "#/page/") to remember the last viewed page,
-so when a visitor hits the back button after visiting an item from that page,
-it will load all items up to that last page and scrolls it into view.
-The use of hashes can be problematic in some cases, in which case you can disable this feature.</p>
+<p>The list of the enabled plugin extensions.</p>
 
 <h3>
-<a name="scrollcontainer" class="anchor" href="#scrollcontainer"><span class="octicon octicon-link"></span></a><code>scrollContainer</code>
-</h3>
+<a name="extension-options" class="anchor" href="#extension-options"><span class="octicon octicon-link"></span></a>Extension Options</h3>
 
-<p><em>Default:</em> <code>$(window)</code></p>
+<h4>
+<a name="triggertext" class="anchor" href="#triggertext"><span class="octicon octicon-link"></span></a><code>triggerText</code>
+</h4>
 
-<p>By default, scroll events are listened from the <code>$(window)</code> object.
-You can use this setting to specify a custom container, for example a div with overflow.</p>
+<p><em>Default:</em> "Load more items"</p>
+
+<p>Text of trigger the link.</p>
+
+<h4>
+<a name="triggertemplate" class="anchor" href="#triggertemplate"><span class="octicon octicon-link"></span></a><code>triggerTemplate</code>
+</h4>
+
+<p><em>Default:</em> "<code>&lt;div class="ias-trigger" style="text-align: center; cursor: pointer;"&gt;&lt;a&gt;{text}&lt;/a&gt;&lt;/div&gt;</code>"</p>
+
+<p>Allows you to override the trigger html template.</p>
+
+<h4>
+<a name="triggeroffset" class="anchor" href="#triggeroffset"><span class="octicon octicon-link"></span></a><code>triggerOffset</code>
+</h4>
+
+<p><em>Default:</em> 0</p>
+
+<p>The number of pages which should load automatically. After that the trigger is shown for every subsequent page.</p>
+
+<p>For example: if you set the offset to 2, the pages 2 and 3 (page 1 is always shown) would load automatically and for every subsequent page the user has to press the trigger to load it.</p>
+
+<h4>
+<a name="spinnersrc" class="anchor" href="#spinnersrc"><span class="octicon octicon-link"></span></a><code>spinnerSrc</code>
+</h4>
+
+<p><em>Default:</em> <img src="https://raw.githubusercontent.com/kop/yii2-scroll-pager/v1.0.2/assets/infinite-ajax-scroll/images/loader.gif" alt="Spinner Image"></p>
+
+<p>The src attribute of the spinner image.</p>
+
+<h4>
+<a name="spinnertemplate" class="anchor" href="#spinnertemplate"><span class="octicon octicon-link"></span></a><code>spinnerTemplate</code>
+</h4>
+
+<p><em>Default:</em> "<code>&lt;div class="ias-spinner" style="text-align: center;"&gt;&lt;img src="{src}"/&gt;&lt;/div&gt;</code>"</p>
+
+<p>Allows you to override the spinner html template.</p>
+
+<h4>
+<a name="nonelefttext" class="anchor" href="#nonelefttext"><span class="octicon octicon-link"></span></a><code>noneLeftText</code>
+</h4>
+
+<p><em>Default:</em> "You reached the end"</p>
+
+<p>Text of the "nothing left" message.</p>
+
+<h4>
+<a name="nonelefttemplate" class="anchor" href="#nonelefttemplate"><span class="octicon octicon-link"></span></a><code>noneLeftTemplate</code>
+</h4>
+
+<p><em>Default:</em> "<code>&lt;div class="ias-noneleft" style="text-align: center;"&gt;{text}&lt;/div&gt;</code>"</p>
+
+<p>Allows you to override the "nothing left" message html template.</p>
+
+<h4>
+<a name="historyprev" class="anchor" href="#historyprev"><span class="octicon octicon-link"></span></a><code>historyPrev</code>
+</h4>
+
+<p><em>Default:</em> ".previous"</p>
+
+<p>Enter the selector of the link element that links to the previous page.</p>
+
+<p>The href attribute of this element will be used to get the items from the previous page.</p>
+
+<p>Make sure there is only one element that matches the selector.</p>
+
+<h3>
+<a name="plugin-events" class="anchor" href="#plugin-events"><span class="octicon octicon-link"></span></a>Plugin Events</h3>
+
+<h4>
+<a name="eventonscroll" class="anchor" href="#eventonscroll"><span class="octicon octicon-link"></span></a><code>eventOnScroll</code>
+</h4>
+
+<p><em>Default:</em> null</p>
+
+<p>Triggered when the visitors scrolls.</p>
+
+<h4>
+<a name="eventonload" class="anchor" href="#eventonload"><span class="octicon octicon-link"></span></a><code>eventOnLoad</code>
+</h4>
+
+<p><em>Default:</em> null</p>
+
+<p>Triggered when a new url will be loaded from the server.</p>
+
+<h4>
+<a name="eventonloaded" class="anchor" href="#eventonloaded"><span class="octicon octicon-link"></span></a><code>eventOnLoaded</code>
+</h4>
+
+<p><em>Default:</em> null</p>
+
+<p>Triggered after a new page was loaded from the server.</p>
+
+<h4>
+<a name="eventonrender" class="anchor" href="#eventonrender"><span class="octicon octicon-link"></span></a><code>eventOnRender</code>
+</h4>
+
+<p><em>Default:</em> null</p>
+
+<p>Triggered before new items will be rendered.</p>
+
+<h4>
+<a name="eventonrendered" class="anchor" href="#eventonrendered"><span class="octicon octicon-link"></span></a><code>eventOnRendered</code>
+</h4>
+
+<p><em>Default:</em> null</p>
+
+<p>Triggered after new items have rendered.</p>
+
+<h4>
+<a name="eventonnoneleft" class="anchor" href="#eventonnoneleft"><span class="octicon octicon-link"></span></a><code>eventOnNoneLeft</code>
+</h4>
+
+<p><em>Default:</em> null</p>
+
+<p>Triggered when there are no more pages left.</p>
+
+<h4>
+<a name="eventonnext" class="anchor" href="#eventonnext"><span class="octicon octicon-link"></span></a><code>eventOnNext</code>
+</h4>
+
+<p><em>Default:</em> null</p>
+
+<p>Triggered when the next page should be loaded.</p>
+
+<p>Happens before loading of the next page starts. With this event it is possible to cancel the loading of the next page.</p>
+
+<p>You can do this by returning false from your callback.</p>
+
+<h4>
+<a name="eventonready" class="anchor" href="#eventonready"><span class="octicon octicon-link"></span></a><code>eventOnReady</code>
+</h4>
+
+<p><em>Default:</em> null</p>
+
+<p>Triggered when IAS and all the extensions have been initialized.</p>
+
+<h4>
+<a name="eventonpagechange" class="anchor" href="#eventonpagechange"><span class="octicon octicon-link"></span></a><code>eventOnPageChange</code>
+</h4>
+
+<p><em>Default:</em> null</p>
+
+<p>Triggered when a used scroll to another page.</p>
 
 <h2>
 <a name="report" class="anchor" href="#report"><span class="octicon octicon-link"></span></a>Report</h2>
