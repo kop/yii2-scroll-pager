@@ -51,80 +51,160 @@ echo ListView::widget([
 
 ## Configuration
 
-### `container`
+### General Options
+
+#### `container`
 
 *Default:* ".list-view"
 
 Enter the selector of the element containing your items that you want to paginate.
 
-### `item`
+#### `item`
 
 *Default:* ".item"
 
 Enter the selector of the element that each item has. Make sure the elements are inside the container element.
 
-### `noneLeft`
-
-*Default:* false
-
-Contains the message to be displayed when there are no more pages left to load.
-
-### `loader`
-
-*Default:* `<img src="images/loader.gif"/>` ![Spinner Image](https://raw2.github.com/kop/yii2-scroll-pager/master/assets/infinite-ajax-scroll/images/loader.gif)
-
-Loader spinner. This HTML element will be displayed when the next page with items is loaded via AJAX.
-
-### `loaderDelay`
+#### `delay`
 
 *Default:* 600
 
-Minimal time (in milliseconds) the loader should be displayed before rendering the items of the next page.
-Note: This setting will _not_ actually delay the the loading of items itself.
+Minimal number of milliseconds to stay in a loading state.
 
-### `triggerPageThreshold`
+#### `negativeMargin`
 
-*Default:* 3
-
-Page number after which a 'Load more items' link is displayed.
-Users will manually trigger the loading of the next page by clicking this link.
-
-### `trigger`
-
-*Default:* "Load more items"
-
-Text of the manual trigger link.
-
-### `thresholdMargin`
-
-*Default:* 0
+*Default:* 10
 
 On default IAS starts loading new items when you scroll to the latest .item element.
-The thresholdMargin will be added to the items' offset, giving you the ability to load new items earlier
-(please note that the margin should be a negative integer for this case).
+The negativeMargin will be added to the items' offset, giving you the ability to load new items earlier (please note that the margin is always transformed to a negative integer).
 
 For example:
 
-Setting a thresholdMargin of -250 means that IAS will start loading 250 pixel _before_ the last item has scrolled into view.
-A positive margin means that IAS will load new items N pixels after the last item.
+Setting a negativeMargin of 250 means that IAS will start loading 250 pixel before the last item has scrolled into view.
 
-### `history`
+### Extensions
 
-*Default:* true
+#### `enabledExtensions`
 
-Set this to false to disable the history module.
+*Default:* Array(ScrollPager::EXTENSION_TRIGGER, ScrollPager::EXTENSION_SPINNER, ScrollPager::EXTENSION_NONE_LEFT, ScrollPager::EXTENSION_PAGING, ScrollPager::EXTENSION_HISTORY)
 
-The IAS history module uses hashes (in the format "#/page/<num>") to remember the last viewed page,
-so when a visitor hits the back button after visiting an item from that page,
-it will load all items up to that last page and scrolls it into view.
-The use of hashes can be problematic in some cases, in which case you can disable this feature.
+The list of the enabled plugin extensions.
 
-### `scrollContainer`
+### Extension Options
 
-*Default:* `$(window)`
+#### `triggerText`
 
-By default, scroll events are listened from the `$(window)` object.
-You can use this setting to specify a custom container, for example a div with overflow.
+*Default:* "Load more items"
+
+Text of trigger the link.
+
+#### `triggerTemplate`
+
+*Default:* "<div class="ias-trigger" style="text-align: center; cursor: pointer;"><a>{text}</a></div>"
+
+Allows you to override the trigger html template.
+
+#### `triggerOffset`
+
+*Default:* 0
+
+The number of pages which should load automatically. After that the trigger is shown for every subsequent page.
+
+For example: if you set the offset to 2, the pages 2 and 3 (page 1 is always shown) would load automatically and for every subsequent page the user has to press the trigger to load it.
+
+#### `spinnerSrc`
+
+*Default:* ![Spinner Image](https://raw.githubusercontent.com/kop/yii2-scroll-pager/v1.0.2/assets/infinite-ajax-scroll/images/loader.gif)
+
+The src attribute of the spinner image.
+
+#### `spinnerTemplate`
+
+*Default:* "<div class="ias-spinner" style="text-align: center;"><img src="{src}"/></div>"
+
+Allows you to override the spinner html template.
+
+#### `noneLeftText`
+
+*Default:* "You reached the end"
+
+Text of the "nothing left" message.
+
+#### `noneLeftTemplate`
+
+*Default:* "<div class="ias-noneleft" style="text-align: center;">{text}</div>"
+
+Allows you to override the "nothing left" message html template.
+
+#### `historyPrev`
+
+*Default:* ".previous"
+
+Enter the selector of the link element that links to the previous page.
+
+The href attribute of this element will be used to get the items from the previous page.
+
+Make sure there is only one element that matches the selector.
+
+### Plugin Events
+
+#### `eventOnScroll`
+
+*Default:* null
+
+Triggered when the visitors scrolls.
+
+#### `eventOnLoad`
+
+*Default:* null
+
+Triggered when a new url will be loaded from the server.
+
+#### `eventOnLoaded`
+
+*Default:* null
+
+Triggered after a new page was loaded from the server.
+
+#### `eventOnRender`
+
+*Default:* null
+
+Triggered before new items will be rendered.
+
+#### `eventOnRendered`
+
+*Default:* null
+
+Triggered after new items have rendered.
+
+#### `eventOnNoneLeft`
+
+*Default:* null
+
+Triggered when there are no more pages left.
+
+#### `eventOnNext`
+
+*Default:* null
+
+Triggered when the next page should be loaded.
+
+Happens before loading of the next page starts. With this event it is possible to cancel the loading of the next page.
+
+You can do this by returning false from your callback.
+
+#### `eventOnReady`
+
+*Default:* null
+
+Triggered when IAS and all the extensions have been initialized.
+
+#### `eventOnPageChange`
+
+*Default:* null
+
+Triggered when a used scroll to another page.
 
 
 ## Report

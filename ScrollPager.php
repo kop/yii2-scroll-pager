@@ -3,11 +3,11 @@
 namespace kop\y2sp;
 
 use Yii;
+use yii\base\InvalidConfigException;
+use yii\web\JsExpression;
 use yii\web\View;
 use yii\base\Widget;
-use yii\helpers\Html;
 use yii\helpers\Json;
-use yii\web\JsExpression;
 use yii\widgets\LinkPager;
 use yii\helpers\ArrayHelper;
 use yii\i18n\PhpMessageSource;
@@ -36,10 +36,35 @@ use kop\y2sp\assets\InfiniteAjaxScrollAsset;
  * @license   https://github.com/kop/yii2-scroll-pager/blob/master/LICENSE.md MIT
  *
  * @author    Ivan Koptiev <ikoptev@gmail.com>
- * @version   0.1
+ * @version   2.1.0
  */
 class ScrollPager extends Widget
 {
+    /**
+     * @const EXTENSION_TRIGGER IAS Extension "IASTriggerExtension".
+     */
+    const EXTENSION_TRIGGER = 'IASTriggerExtension';
+
+    /**
+     * @const EXTENSION_SPINNER IAS Extension "IASSpinnerExtension".
+     */
+    const EXTENSION_SPINNER = 'IASSpinnerExtension';
+
+    /**
+     * @const EXTENSION_NONE_LEFT IAS Extension "IASNoneLeftExtension".
+     */
+    const EXTENSION_NONE_LEFT = 'IASNoneLeftExtension';
+
+    /**
+     * @const EXTENSION_PAGING IAS Extension "IASPagingExtension".
+     */
+    const EXTENSION_PAGING = 'IASPagingExtension';
+
+    /**
+     * @const EXTENSION_HISTORY IAS Extension "IASHistoryExtension".
+     */
+    const EXTENSION_HISTORY = 'IASHistoryExtension';
+
     /**
      * @var string $container Enter the selector of the element containing your items that you want to paginate.
      */
@@ -52,59 +77,138 @@ class ScrollPager extends Widget
     public $item = '.item';
 
     /**
-     * @var bool|string $noneLeft Contains the message to be displayed when there are no more pages left to load.
-     * FALSE means no message.
+     * @var int $delay Minimal number of milliseconds to stay in a loading state.
      */
-    public $noneLeft = false;
-
-    /**
-     * @var string $loader Loader spinner.
-     * This HTML element will be displayed when the next page with items is loaded via AJAX.
-     */
-    public $loader;
-
-    /**
-     * @var int $loaderDelay Minimal time (in milliseconds) the loader should be displayed before rendering the
-     * items of the next page. Note: This setting will not actually delay the the loading of items itself.
-     */
-    public $loaderDelay = 600;
-
-    /**
-     * @var int $triggerPageThreshold Page number after which a 'Load more items' link is displayed.
-     * Users will manually trigger the loading of the next page by clicking this link.
-     */
-    public $triggerPageThreshold = 3;
-
-    /**
-     * @var string $trigger Text of the manual trigger link.
-     */
-    public $trigger;
+    public $delay = 600;
 
     /**
      * @var int $thresholdMargin On default IAS starts loading new items when you scroll to the latest .item element.
-     * The thresholdMargin will be added to the items' offset, giving you the ability to load new items earlier
-     * (please note that the margin should be a negative integer for this case).
+     * The negativeMargin will be added to the items' offset, giving you the ability to load new items earlier
+     * (please note that the margin is always transformed to a negative integer).
      * <br><br>
      * <i>For example:</i>
      * <br>
-     * Setting a thresholdMargin of -250 means that IAS will start loading 250 pixel before the last item has scrolled
-     * into view. A positive margin means that IAS will load new items N pixels after the last item.
+     * Setting a negativeMargin of 250 means that IAS will start loading 250 pixel before the last item has scrolled into view.
      */
-    public $thresholdMargin = 0;
+    public $negativeMargin = 0;
 
     /**
-     * @var bool $history The IAS history module uses hashes (in the format "#/page/") to remember the last viewed page,
-     * so when a visitor hits the back button after visiting an item from that page,
-     * it will load all items up to that last page and scrolls it into view.
-     * The use of hashes can be problematic in some cases, in which case you can disable this feature.
+     * @var string $triggerText Text of trigger the link.
+     * Default: "Load more items".
      */
-    public $history = true;
+    public $triggerText;
 
     /**
-     * @var string $scrollContainer By default, scroll events are listened from the $(window) object.
-     * You can use this setting to specify a custom container, for example a div with overflow.
+     * @var string $triggerTemplate Allows you to override the trigger html template.
      */
-    public $scrollContainer = '$(window)';
+    public $triggerTemplate = '<div class="ias-trigger" style="text-align: center; cursor: pointer;"><a>{text}</a></div>';
+
+    /**
+     * @var int $triggerOffset The number of pages which should load automatically.
+     * After that the trigger is shown for every subsequent page.
+     * <br><br>
+     * <i>For example:</i>
+     * <br>
+     * if you set the offset to 2, the pages 2 and 3 (page 1 is always shown) would load automatically and for every
+     * subsequent page the user has to press the trigger to load it.
+     */
+    public $triggerOffset = 0;
+
+    /**
+     * @var string $spinnerSrc The src attribute of the spinner image.
+     */
+    public $spinnerSrc;
+
+    /**
+     * @var string $spinnerTemplate Allows you to override the spinner html template.
+     */
+    public $spinnerTemplate = '<div class="ias-spinner" style="text-align: center;"><img src="{src}"/></div>';
+
+    /**
+     * @var string $noneLeftText Text of the "nothing left" message.
+     * Default: "You reached the end".
+     */
+    public $noneLeftText;
+
+    /**
+     * @var string $noneLeftTemplate Allows you to override the "nothing left" message html template.
+     */
+    public $noneLeftTemplate = '<div class="ias-noneleft" style="text-align: center;">{text}</div>';
+
+    /**
+     * @var string $historyPrev Enter the selector of the link element that links to the previous page.
+     * The href attribute of this element will be used to get the items from the previous page.
+     * Make sure there is only one element that matches the selector.
+     */
+    public $historyPrev = '.previous';
+
+    /**
+     * @var string|JsExpression $eventOnScroll Triggered when the visitors scrolls.
+     * @see http://infiniteajaxscroll.com/docs/events.html
+     */
+    public $eventOnScroll;
+
+    /**
+     * @var string|JsExpression $eventOnLoad Triggered when a new url will be loaded from the server.
+     * @see http://infiniteajaxscroll.com/docs/events.html
+     */
+    public $eventOnLoad;
+
+    /**
+     * @var string|JsExpression $eventOnLoaded Triggered after a new page was loaded from the server.
+     * @see http://infiniteajaxscroll.com/docs/events.html
+     */
+    public $eventOnLoaded;
+
+    /**
+     * @var string|JsExpression $eventOnRender Triggered before new items will be rendered.
+     * @see http://infiniteajaxscroll.com/docs/events.html
+     */
+    public $eventOnRender;
+
+    /**
+     * @var string|JsExpression $eventOnRendered Triggered after new items have rendered.
+     * Note: This event is only fired once.
+     * @see http://infiniteajaxscroll.com/docs/events.html
+     */
+    public $eventOnRendered;
+
+    /**
+     * @var string|JsExpression $eventOnNoneLeft Triggered when there are no more pages left.
+     * @see http://infiniteajaxscroll.com/docs/events.html
+     */
+    public $eventOnNoneLeft;
+
+    /**
+     * @var string|JsExpression $eventOnNext Triggered when the next page should be loaded.
+     * Happens before loading of the next page starts. With this event it is possible to cancel the loading of the next page.
+     * You can do this by returning false from your callback.
+     * @see http://infiniteajaxscroll.com/docs/events.html
+     */
+    public $eventOnNext;
+
+    /**
+     * @var string|JsExpression $eventOnReady Triggered when IAS and all the extensions have been initialized.
+     * @see http://infiniteajaxscroll.com/docs/events.html
+     */
+    public $eventOnReady;
+
+    /**
+     * @var string|JsExpression $eventOnPageChange Triggered when a used scroll to another page.
+     * @see http://infiniteajaxscroll.com/docs/extension-paging.html
+     */
+    public $eventOnPageChange;
+
+    /**
+     * @var array $enabledExtensions The list of the enabled plugin extensions.
+     */
+    public $enabledExtensions = [
+        self::EXTENSION_TRIGGER,
+        self::EXTENSION_SPINNER,
+        self::EXTENSION_NONE_LEFT,
+        self::EXTENSION_PAGING,
+        self::EXTENSION_HISTORY
+    ];
 
     /**
      * @var \yii\data\Pagination The pagination object that this pager is associated with.
@@ -132,16 +236,15 @@ class ScrollPager extends Widget
 
         // Register required assets
         InfiniteAjaxScrollAsset::register($this->view);
-        $bundleUrl = $this->view->assetManager->getPublishedUrl((new InfiniteAjaxScrollAsset())->sourcePath);
-
-        // Set default loader spinner if not set
-        if ($this->loader === null) {
-            $this->loader = Html::img("{$bundleUrl}/images/loader.gif");
-        }
 
         // Set default trigger text if not set
-        if ($this->trigger === null) {
-            $this->trigger = Yii::t('kop\y2sp', 'Load more items');
+        if ($this->triggerText === null) {
+            $this->triggerText = Yii::t('kop\y2sp', 'Load more items');
+        }
+
+        // Set default "none left" message text if not set
+        if ($this->noneLeftText === null) {
+            $this->noneLeftText = Yii::t('kop\y2sp', 'You reached the end');
         }
     }
 
@@ -158,16 +261,111 @@ class ScrollPager extends Widget
             'item' => $this->item,
             'pagination' => "{$this->container} .pagination",
             'next' => '.next a',
-            'noneleft' => $this->noneLeft,
-            'loader' => $this->loader,
-            'loaderDelay' => $this->loaderDelay,
-            'triggerPageTreshold' => $this->triggerPageThreshold,
-            'trigger' => $this->trigger,
-            'tresholdMargin' => $this->thresholdMargin,
-            'history' => $this->history,
-            'scrollContainer' => new JsExpression($this->scrollContainer)
+            'delay' => $this->delay,
+            'negativeMargin' => $this->negativeMargin
         ]);
-        $this->view->registerJs("jQuery.ias({$pluginSettings});", View::POS_READY);
+        $this->view->registerJs("var {$this->id}_ias = jQuery.ias({$pluginSettings});", View::POS_READY);
+
+        // Register "IASTriggerExtension"
+        if (in_array(self::EXTENSION_TRIGGER, $this->enabledExtensions)) {
+            $triggerSettings = Json::encode([
+                'text' => $this->triggerText,
+                'html' => $this->triggerTemplate,
+                'offset' => $this->triggerOffset
+            ]);
+            $this->view->registerJs(
+                "{$this->id}_ias.extension(new IASTriggerExtension({$triggerSettings}));",
+                View::POS_READY
+            );
+        }
+
+        // Register "IASSpinnerExtension"
+        if (in_array(self::EXTENSION_SPINNER, $this->enabledExtensions)) {
+            $spinnerSettings = Json::encode([
+                'src' => $this->spinnerSrc,
+                'html' => $this->spinnerTemplate
+            ]);
+            $this->view->registerJs(
+                "{$this->id}_ias.extension(new IASSpinnerExtension({$spinnerSettings}));",
+                View::POS_READY
+            );
+        }
+
+        // Register "IASNoneLeftExtension"
+        if (in_array(self::EXTENSION_NONE_LEFT, $this->enabledExtensions)) {
+            $noneLeftSettings = Json::encode([
+                'text' => $this->noneLeftText,
+                'html' => $this->noneLeftTemplate
+            ]);
+            $this->view->registerJs(
+                "{$this->id}_ias.extension(new IASNoneLeftExtension({$noneLeftSettings}));",
+                View::POS_READY
+            );
+        }
+
+        // Register "IASPagingExtension"
+        if (in_array(self::EXTENSION_PAGING, $this->enabledExtensions)) {
+            $this->view->registerJs("{$this->id}_ias.extension(new IASPagingExtension());", View::POS_READY);
+        }
+
+        // Register "IASHistoryExtension"
+        if (in_array(self::EXTENSION_HISTORY, $this->enabledExtensions)) {
+
+            // Make sure dependencies are met
+            if (
+                !in_array(self::EXTENSION_TRIGGER, $this->enabledExtensions)
+                || !in_array(self::EXTENSION_TRIGGER, $this->enabledExtensions)
+            ) {
+                throw new InvalidConfigException(
+                    'This IASHistoryExtension requires the IASTriggerExtension and the IASPagingExtension to be enabled.'
+                );
+            }
+
+            $historySettings = Json::encode([
+                'prev' => $this->noneLeftText
+            ]);
+            $this->view->registerJs(
+                "{$this->id}_ias.extension(new IASHistoryExtension({$historySettings}));",
+                View::POS_READY
+            );
+        }
+
+        // Register event handlers
+        if (!empty($this->eventOnScroll)) {
+            $this->view->registerJs("jQuery.ias().on('scroll', {$this->eventOnScroll});", View::POS_READY);
+        }
+        if (!empty($this->eventOnLoad)) {
+            $this->view->registerJs("jQuery.ias().on('load', {$this->eventOnLoad});", View::POS_READY);
+        }
+        if (!empty($this->eventOnLoaded)) {
+            $this->view->registerJs("jQuery.ias().on('loaded', {$this->eventOnLoaded});", View::POS_READY);
+        }
+        if (!empty($this->eventOnRender)) {
+            $this->view->registerJs("jQuery.ias().on('render', {$this->eventOnRender});", View::POS_READY);
+        }
+        if (!empty($this->eventOnRendered)) {
+            $this->view->registerJs("jQuery.ias().on('rendered', {$this->eventOnRendered});", View::POS_READY);
+        }
+        if (!empty($this->eventOnNoneLeft)) {
+            $this->view->registerJs("jQuery.ias().on('noneLeft', {$this->eventOnNoneLeft});", View::POS_READY);
+        }
+        if (!empty($this->eventOnNext)) {
+            $this->view->registerJs("jQuery.ias().on('next', {$this->eventOnNext});", View::POS_READY);
+        }
+        if (!empty($this->eventOnReady)) {
+            $this->view->registerJs("jQuery.ias().on('ready', {$this->eventOnReady});", View::POS_READY);
+        }
+        if (!empty($this->eventOnPageChange)) {
+
+            // Make sure dependencies are met
+            if (!in_array(self::EXTENSION_PAGING, $this->enabledExtensions)) {
+                throw new InvalidConfigException(
+                    'The "pageChange" event requires the IASPagingExtension to be enabled.'
+                );
+            }
+
+            $this->view->registerJs("jQuery.ias().on('pageChange', {$this->eventOnPageChange});", View::POS_READY);
+        }
 
         // Render pagination links
         echo LinkPager::widget([
