@@ -264,7 +264,11 @@ class ScrollPager extends Widget
             'delay' => $this->delay,
             'negativeMargin' => $this->negativeMargin
         ]);
-        $this->view->registerJs("var {$this->id}_ias = jQuery.ias({$pluginSettings});", View::POS_READY);
+        $this->view->registerJs(
+            "var {$this->id}_ias = jQuery.ias({$pluginSettings});",
+            View::POS_READY,
+            "{$this->id}_ias_main"
+        );
 
         // Register "IASTriggerExtension"
         if (in_array(self::EXTENSION_TRIGGER, $this->enabledExtensions)) {
@@ -275,7 +279,8 @@ class ScrollPager extends Widget
             ]);
             $this->view->registerJs(
                 "{$this->id}_ias.extension(new IASTriggerExtension({$triggerSettings}));",
-                View::POS_READY
+                View::POS_READY,
+                "{$this->id}_ias_IASTriggerExtension"
             );
         }
 
@@ -288,7 +293,8 @@ class ScrollPager extends Widget
             $spinnerSettings = Json::encode($spinnerSettings);
             $this->view->registerJs(
                 "{$this->id}_ias.extension(new IASSpinnerExtension({$spinnerSettings}));",
-                View::POS_READY
+                View::POS_READY,
+                "{$this->id}_ias_IASSpinnerExtension"
             );
         }
 
@@ -300,13 +306,18 @@ class ScrollPager extends Widget
             ]);
             $this->view->registerJs(
                 "{$this->id}_ias.extension(new IASNoneLeftExtension({$noneLeftSettings}));",
-                View::POS_READY
+                View::POS_READY,
+                "{$this->id}_ias_IASNoneLeftExtension"
             );
         }
 
         // Register "IASPagingExtension"
         if (in_array(self::EXTENSION_PAGING, $this->enabledExtensions)) {
-            $this->view->registerJs("{$this->id}_ias.extension(new IASPagingExtension());", View::POS_READY);
+            $this->view->registerJs(
+                "{$this->id}_ias.extension(new IASPagingExtension());",
+                View::POS_READY,
+                "{$this->id}_ias_IASPagingExtension"
+            );
         }
 
         // Register "IASHistoryExtension"
@@ -327,34 +338,67 @@ class ScrollPager extends Widget
             ]);
             $this->view->registerJs(
                 "{$this->id}_ias.extension(new IASHistoryExtension({$historySettings}));",
-                View::POS_READY
+                View::POS_READY,
+                "{$this->id}_ias_IASHistoryExtension"
             );
         }
 
         // Register event handlers
         if (!empty($this->eventOnScroll)) {
-            $this->view->registerJs("jQuery.ias().on('scroll', {$this->eventOnScroll});", View::POS_READY);
+            $this->view->registerJs(
+                "jQuery.ias().on('scroll', {$this->eventOnScroll});",
+                View::POS_READY,
+                "{$this->id}_ias_scroll"
+            );
         }
         if (!empty($this->eventOnLoad)) {
-            $this->view->registerJs("jQuery.ias().on('load', {$this->eventOnLoad});", View::POS_READY);
+            $this->view->registerJs(
+                "jQuery.ias().on('load', {$this->eventOnLoad});",
+                View::POS_READY,
+                "{$this->id}_ias_load"
+            );
         }
         if (!empty($this->eventOnLoaded)) {
-            $this->view->registerJs("jQuery.ias().on('loaded', {$this->eventOnLoaded});", View::POS_READY);
+            $this->view->registerJs(
+                "jQuery.ias().on('loaded', {$this->eventOnLoaded});",
+                View::POS_READY,
+                "{$this->id}_ias_loaded"
+            );
         }
         if (!empty($this->eventOnRender)) {
-            $this->view->registerJs("jQuery.ias().on('render', {$this->eventOnRender});", View::POS_READY);
+            $this->view->registerJs(
+                "jQuery.ias().on('render', {$this->eventOnRender});",
+                View::POS_READY,
+                "{$this->id}_ias_render"
+            );
         }
         if (!empty($this->eventOnRendered)) {
-            $this->view->registerJs("jQuery.ias().on('rendered', {$this->eventOnRendered});", View::POS_READY);
+            $this->view->registerJs(
+                "jQuery.ias().on('rendered', {$this->eventOnRendered});",
+                View::POS_READY,
+                "{$this->id}_ias_rendered"
+            );
         }
         if (!empty($this->eventOnNoneLeft)) {
-            $this->view->registerJs("jQuery.ias().on('noneLeft', {$this->eventOnNoneLeft});", View::POS_READY);
+            $this->view->registerJs(
+                "jQuery.ias().on('noneLeft', {$this->eventOnNoneLeft});",
+                View::POS_READY,
+                "{$this->id}_ias_noneLeft"
+            );
         }
         if (!empty($this->eventOnNext)) {
-            $this->view->registerJs("jQuery.ias().on('next', {$this->eventOnNext});", View::POS_READY);
+            $this->view->registerJs(
+                "jQuery.ias().on('next', {$this->eventOnNext});",
+                View::POS_READY,
+                "{$this->id}_ias_next"
+            );
         }
         if (!empty($this->eventOnReady)) {
-            $this->view->registerJs("jQuery.ias().on('ready', {$this->eventOnReady});", View::POS_READY);
+            $this->view->registerJs(
+                "jQuery.ias().on('ready', {$this->eventOnReady});",
+                View::POS_READY,
+                "{$this->id}_ias_ready"
+            );
         }
         if (!empty($this->eventOnPageChange)) {
 
@@ -365,7 +409,11 @@ class ScrollPager extends Widget
                 );
             }
 
-            $this->view->registerJs("jQuery.ias().on('pageChange', {$this->eventOnPageChange});", View::POS_READY);
+            $this->view->registerJs(
+                "jQuery.ias().on('pageChange', {$this->eventOnPageChange});",
+                View::POS_READY,
+                "{$this->id}_ias_pageChange"
+            );
         }
 
         // Render pagination links
