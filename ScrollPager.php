@@ -90,7 +90,7 @@ class ScrollPager extends Widget
      * <br>
      * Setting a negativeMargin of 250 means that IAS will start loading 250 pixel before the last item has scrolled into view.
      */
-    public $negativeMargin = 0;
+    public $negativeMargin = 10;
 
     /**
      * @var string $triggerText Text of trigger the link.
@@ -281,10 +281,11 @@ class ScrollPager extends Widget
 
         // Register "IASSpinnerExtension"
         if (in_array(self::EXTENSION_SPINNER, $this->enabledExtensions)) {
-            $spinnerSettings = Json::encode([
-                'src' => $this->spinnerSrc,
-                'html' => $this->spinnerTemplate
-            ]);
+            $spinnerSettings = ['html' => $this->spinnerTemplate];
+            if (!empty($spinnerSettings)) {
+                $spinnerSettings['src'] = $this->spinnerSrc;
+            }
+            $spinnerSettings = Json::encode($spinnerSettings);
             $this->view->registerJs(
                 "{$this->id}_ias.extension(new IASSpinnerExtension({$spinnerSettings}));",
                 View::POS_READY
