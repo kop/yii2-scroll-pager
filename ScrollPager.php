@@ -282,7 +282,7 @@ class ScrollPager extends Widget
         // Register "IASSpinnerExtension"
         if (in_array(self::EXTENSION_SPINNER, $this->enabledExtensions)) {
             $spinnerSettings = ['html' => $this->spinnerTemplate];
-            if (!empty($spinnerSettings)) {
+            if (!empty($this->spinnerSrc)) {
                 $spinnerSettings['src'] = $this->spinnerSrc;
             }
             $spinnerSettings = Json::encode($spinnerSettings);
