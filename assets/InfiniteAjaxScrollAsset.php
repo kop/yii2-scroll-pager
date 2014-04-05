@@ -33,6 +33,6 @@ class InfiniteAjaxScrollAsset extends AssetBundle
      * @var array $js List of CSS files that this bundle contains.
      */
     public $js = [
-        'jquery.ias.min.js'
+        'jquery-ias.min.js'
     ];
 }
