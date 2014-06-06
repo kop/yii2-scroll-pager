@@ -21,6 +21,9 @@
         "php": ">=5.4.0",
         "yiisoft/yii2": "*"
     },
+	"require-dev": {
+		"codeception/codeception": "~2.0"
+	},
     "autoload": {
         "psr-4": {
             "kop\\y2sp\\": ""

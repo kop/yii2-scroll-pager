@@ -252,6 +252,9 @@ class ScrollPager extends Widget
      * Executes the widget.
      *
      * This overrides the parent implementation by initializing jQuery IAS and displaying the generated page buttons.
+     *
+     * @throws \yii\base\InvalidConfigException
+     * @return mixed
      */
     public function run()
     {
