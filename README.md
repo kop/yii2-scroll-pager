@@ -8,6 +8,7 @@ Y2SP works with a `Pagination` object which specifies the totally number of page
 
 Pager is build with help of [JQuery Infinite Ajax Scroll plugin](https://github.com/webcreate/infinite-ajax-scroll).
 
+[![Code Climate](https://codeclimate.com/github/kop/yii2-scroll-pager.png)](https://codeclimate.com/github/kop/yii2-scroll-pager)
 
 ## Requirements
 
