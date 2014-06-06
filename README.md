@@ -10,6 +10,7 @@ Pager is build with help of [JQuery Infinite Ajax Scroll plugin](https://github.
 
 [![Code Climate](https://codeclimate.com/github/kop/yii2-scroll-pager.png)](https://codeclimate.com/github/kop/yii2-scroll-pager)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kop/yii2-scroll-pager/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kop/yii2-scroll-pager/?branch=master)
+[![Version Eye](https://www.versioneye.com/php/kop:yii2-scroll-pager/badge.svg)](https://www.versioneye.com/php/kop:yii2-scroll-pager)
 
 ## Requirements
 
