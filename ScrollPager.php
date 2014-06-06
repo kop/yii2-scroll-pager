@@ -36,7 +36,7 @@ use kop\y2sp\assets\InfiniteAjaxScrollAsset;
  * @license   https://github.com/kop/yii2-scroll-pager/blob/master/LICENSE.md MIT
  *
  * @author    Ivan Koptiev <ikoptev@gmail.com>
- * @version   2.1.0
+ * @version   2.1.1
  */
 class ScrollPager extends Widget
 {
