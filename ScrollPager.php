@@ -334,7 +334,7 @@ class ScrollPager extends Widget
             }
 
             $historySettings = Json::encode([
-                'prev' => $this->noneLeftText
+                'prev' => $this->historyPrev
             ]);
             $this->view->registerJs(
                 "{$this->id}_ias.extension(new IASHistoryExtension({$historySettings}));",
