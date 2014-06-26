@@ -6,7 +6,7 @@ infinite scrolling page using AJAX.
 
 Y2SP works with a `Pagination` object which specifies the totally number of pages and the current page number.
 
-Pager is build with help of [JQuery Infinite Ajax Scroll plugin](https://github.com/webcreate/infinite-ajax-scroll).
+Pager is build with help of [JQuery Infinite Ajax Scroll plugin](http://infiniteajaxscroll.com/).
 
 [![Latest Stable Version](https://poser.pugx.org/kop/yii2-scroll-pager/v/stable.svg)](https://packagist.org/packages/kop/yii2-scroll-pager)
 [![Build Status](https://travis-ci.org/kop/yii2-scroll-pager.svg?branch=master)](https://travis-ci.org/kop/yii2-scroll-pager)
