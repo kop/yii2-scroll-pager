@@ -13,15 +13,10 @@ use yii\web\AssetBundle;
  * @license   https://github.com/kop/yii2-scroll-pager/blob/master/LICENSE.md MIT
  *
  * @author    Ivan Koptiev <ikoptev@gmail.com>
- * @version   2.1.1
+ * @version   2.1.2
  */
 class InfiniteAjaxScrollAsset extends AssetBundle
 {
-    /**
-     * @var string The root directory of the source asset files.
-     */
-    public $sourcePath = '@vendor/kop/yii2-scroll-pager/assets/infinite-ajax-scroll';
-
     /**
      * @var array List of bundle class names that this bundle depends on.
      */
@@ -30,9 +25,26 @@ class InfiniteAjaxScrollAsset extends AssetBundle
     ];
 
     /**
-     * @var array $js List of CSS files that this bundle contains.
+     * @inheritdoc
      */
-    public $js = [
-        'jquery-ias.min.js'
-    ];
+    public function init()
+    {
+        if (!YII_DEBUG) {
+            $this->sourcePath = '@vendor/kop/yii2-scroll-pager/assets/infinite-ajax-scroll';
+            $this->$js = [
+                'jquery-ias.min.js'
+            ];
+        } else {
+            $this->sourcePath = '@vendor/webcreate/jquery-ias/src';
+            $this->$js = [
+                'callbacks.js',
+                'jquery-ias.js',
+                'extension/history.js',
+                'extension/noneleft.js',
+                'extension/paging.js',
+                'extension/spinner.js',
+                'extension/trigger.js'
+            ];
+        }
+    }
 }
