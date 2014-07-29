@@ -31,12 +31,12 @@ class InfiniteAjaxScrollAsset extends AssetBundle
     {
         if (!YII_DEBUG) {
             $this->sourcePath = '@vendor/kop/yii2-scroll-pager/assets/infinite-ajax-scroll';
-            $this->$js = [
+            $this->js = [
                 'jquery-ias.min.js'
             ];
         } else {
             $this->sourcePath = '@vendor/webcreate/jquery-ias/src';
-            $this->$js = [
+            $this->js = [
                 'callbacks.js',
                 'jquery-ias.js',
                 'extension/history.js',
