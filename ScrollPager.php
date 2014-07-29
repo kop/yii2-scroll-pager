@@ -2,17 +2,16 @@
 
 namespace kop\y2sp;
 
-use Yii;
+use kop\y2sp\assets\InfiniteAjaxScrollAsset;
 use yii\base\InvalidConfigException;
+use yii\base\Widget;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
+use yii\i18n\PhpMessageSource;
 use yii\web\JsExpression;
 use yii\web\View;
-use yii\base\Widget;
-use yii\helpers\Json;
 use yii\widgets\LinkPager;
-use yii\helpers\ArrayHelper;
-use yii\i18n\PhpMessageSource;
-use kop\y2sp\assets\InfiniteAjaxScrollAsset;
-
+use Yii;
 
 /**
  * ScrollPager turns your regular paginated page into an infinite scrolling page using AJAX.
@@ -36,7 +35,7 @@ use kop\y2sp\assets\InfiniteAjaxScrollAsset;
  * @license   https://github.com/kop/yii2-scroll-pager/blob/master/LICENSE.md MIT
  *
  * @author    Ivan Koptiev <ikoptev@gmail.com>
- * @version   2.1.1
+ * @version   2.1.2
  */
 class ScrollPager extends Widget
 {
@@ -273,151 +272,59 @@ class ScrollPager extends Widget
             "{$this->id}_ias_main"
         );
 
-        // Register "IASTriggerExtension"
-        if (in_array(self::EXTENSION_TRIGGER, $this->enabledExtensions)) {
-            $triggerSettings = Json::encode([
-                'text' => $this->triggerText,
-                'html' => $this->triggerTemplate,
-                'offset' => $this->triggerOffset
-            ]);
-            $this->view->registerJs(
-                "{$this->id}_ias.extension(new IASTriggerExtension({$triggerSettings}));",
-                View::POS_READY,
-                "{$this->id}_ias_IASTriggerExtension"
-            );
-        }
-
-        // Register "IASSpinnerExtension"
-        if (in_array(self::EXTENSION_SPINNER, $this->enabledExtensions)) {
-            $spinnerSettings = ['html' => $this->spinnerTemplate];
-            if (!empty($this->spinnerSrc)) {
-                $spinnerSettings['src'] = $this->spinnerSrc;
-            }
-            $spinnerSettings = Json::encode($spinnerSettings);
-            $this->view->registerJs(
-                "{$this->id}_ias.extension(new IASSpinnerExtension({$spinnerSettings}));",
-                View::POS_READY,
-                "{$this->id}_ias_IASSpinnerExtension"
-            );
-        }
-
-        // Register "IASNoneLeftExtension"
-        if (in_array(self::EXTENSION_NONE_LEFT, $this->enabledExtensions)) {
-            $noneLeftSettings = Json::encode([
-                'text' => $this->noneLeftText,
-                'html' => $this->noneLeftTemplate
-            ]);
-            $this->view->registerJs(
-                "{$this->id}_ias.extension(new IASNoneLeftExtension({$noneLeftSettings}));",
-                View::POS_READY,
-                "{$this->id}_ias_IASNoneLeftExtension"
-            );
-        }
-
-        // Register "IASPagingExtension"
-        if (in_array(self::EXTENSION_PAGING, $this->enabledExtensions)) {
-            $this->view->registerJs(
-                "{$this->id}_ias.extension(new IASPagingExtension());",
-                View::POS_READY,
-                "{$this->id}_ias_IASPagingExtension"
-            );
-        }
-
-        // Register "IASHistoryExtension"
-        if (in_array(self::EXTENSION_HISTORY, $this->enabledExtensions)) {
-
-            // Make sure dependencies are met
-            if (
-                !in_array(self::EXTENSION_TRIGGER, $this->enabledExtensions)
-                || !in_array(self::EXTENSION_TRIGGER, $this->enabledExtensions)
-            ) {
-                throw new InvalidConfigException(
-                    'This IASHistoryExtension requires the IASTriggerExtension and the IASPagingExtension to be enabled.'
-                );
-            }
-
-            $historySettings = Json::encode([
-                'prev' => $this->historyPrev
-            ]);
-            $this->view->registerJs(
-                "{$this->id}_ias.extension(new IASHistoryExtension({$historySettings}));",
-                View::POS_READY,
-                "{$this->id}_ias_IASHistoryExtension"
-            );
-        }
+        // Register IAS extensions
+        $this->registerExtensions([
+            [
+                'name' => self::EXTENSION_PAGING
+            ],
+            [
+                'name' => self::EXTENSION_TRIGGER,
+                'options' =>
+                    !empty($this->spinnerSrc)
+                        ? ['html' => $this->spinnerTemplate, 'src' => $this->spinnerSrc]
+                        : ['html' => $this->spinnerTemplate]
+            ],
+            [
+                'name' => self::EXTENSION_TRIGGER,
+                'options' => [
+                    'text' => $this->triggerText,
+                    'html' => $this->triggerTemplate,
+                    'offset' => $this->triggerOffset
+                ]
+            ],
+            [
+                'name' => self::EXTENSION_NONE_LEFT,
+                'options' => [
+                    'text' => $this->noneLeftText,
+                    'html' => $this->noneLeftTemplate
+                ]
+            ],
+            [
+                'name' => self::EXTENSION_HISTORY,
+                'options' => [
+                    'prev' => $this->historyPrev
+                ],
+                'depends' => [
+                    self::EXTENSION_TRIGGER,
+                    self::EXTENSION_PAGING
+                ]
+            ]
+        ]);
 
         // Register event handlers
-        if (!empty($this->eventOnScroll)) {
-            $this->view->registerJs(
-                "jQuery.ias().on('scroll', {$this->eventOnScroll});",
-                View::POS_READY,
-                "{$this->id}_ias_scroll"
-            );
-        }
-        if (!empty($this->eventOnLoad)) {
-            $this->view->registerJs(
-                "jQuery.ias().on('load', {$this->eventOnLoad});",
-                View::POS_READY,
-                "{$this->id}_ias_load"
-            );
-        }
-        if (!empty($this->eventOnLoaded)) {
-            $this->view->registerJs(
-                "jQuery.ias().on('loaded', {$this->eventOnLoaded});",
-                View::POS_READY,
-                "{$this->id}_ias_loaded"
-            );
-        }
-        if (!empty($this->eventOnRender)) {
-            $this->view->registerJs(
-                "jQuery.ias().on('render', {$this->eventOnRender});",
-                View::POS_READY,
-                "{$this->id}_ias_render"
-            );
-        }
-        if (!empty($this->eventOnRendered)) {
-            $this->view->registerJs(
-                "jQuery.ias().on('rendered', {$this->eventOnRendered});",
-                View::POS_READY,
-                "{$this->id}_ias_rendered"
-            );
-        }
-        if (!empty($this->eventOnNoneLeft)) {
-            $this->view->registerJs(
-                "jQuery.ias().on('noneLeft', {$this->eventOnNoneLeft});",
-                View::POS_READY,
-                "{$this->id}_ias_noneLeft"
-            );
-        }
-        if (!empty($this->eventOnNext)) {
-            $this->view->registerJs(
-                "jQuery.ias().on('next', {$this->eventOnNext});",
-                View::POS_READY,
-                "{$this->id}_ias_next"
-            );
-        }
-        if (!empty($this->eventOnReady)) {
-            $this->view->registerJs(
-                "jQuery.ias().on('ready', {$this->eventOnReady});",
-                View::POS_READY,
-                "{$this->id}_ias_ready"
-            );
-        }
-        if (!empty($this->eventOnPageChange)) {
-
-            // Make sure dependencies are met
-            if (!in_array(self::EXTENSION_PAGING, $this->enabledExtensions)) {
-                throw new InvalidConfigException(
-                    'The "pageChange" event requires the IASPagingExtension to be enabled.'
-                );
-            }
-
-            $this->view->registerJs(
-                "jQuery.ias().on('pageChange', {$this->eventOnPageChange});",
-                View::POS_READY,
-                "{$this->id}_ias_pageChange"
-            );
-        }
+        $this->registerEventHandlers([
+            'scroll' => [],
+            'load' => [],
+            'loaded' => [],
+            'render' => [],
+            'rendered' => [],
+            'noneLeft' => [],
+            'next' => [],
+            'ready' => [],
+            'pageChange' => [
+                self::EXTENSION_PAGING
+            ]
+        ]);
 
         // Render pagination links
         echo LinkPager::widget([
@@ -426,5 +333,76 @@ class ScrollPager extends Widget
                 'class' => 'pagination hidden'
             ]
         ]);
+    }
+
+    /**
+     * Register jQuery IAS extensions.
+     *
+     * This method takes jQuery IAS extensions definition as a parameter and registers this extensions.
+     *
+     * @param array $config jQuery IAS extensions definition.
+     * @throws \yii\base\InvalidConfigException If extension dependencies are not met.
+     */
+    protected function registerExtensions(array $config)
+    {
+        foreach ($config as $entry) {
+
+            // Parse config entry values
+            $name = ArrayHelper::getValue($entry, 'name', false);
+            $options = ArrayHelper::getValue($entry, 'options', '');
+            $depends = ArrayHelper::getValue($entry, 'depends', []);
+
+            // If extension is enabled
+            if (in_array($name, $this->enabledExtensions)) {
+
+                // Make sure dependencies are met
+                if (!empty($depends) && count(array_intersect($this->enabledExtensions, $depends)) == count($depends)) {
+                    throw new InvalidConfigException(
+                        "Extension {$name} requires " . explode(', ', $depends) . " extensions to be enabled."
+                    );
+                }
+
+                // Register extension
+                $options = Json::encode($options);
+                $this->view->registerJs(
+                    "{$this->id}_ias.extension(new {$name}({$options}));",
+                    View::POS_READY,
+                    "{$this->id}_ias_{$name}"
+                );
+            }
+        }
+    }
+
+    /**
+     * Register jQuery IAS event handlers.
+     *
+     * This method takes jQuery IAS event handlers definition as a parameter and registers this event handlers.
+     *
+     * @param array $config jQuery IAS event handlers definition.
+     * @throws \yii\base\InvalidConfigException If vent handlers dependencies are not met.
+     */
+    protected function registerEventHandlers(array $config)
+    {
+        foreach ($config as $name => $depends) {
+
+            // If event is enabled
+            $eventName = 'eventOn' . ucfirst($name);
+            if (!empty($this->$eventName)) {
+
+                // Make sure dependencies are met
+                if (!empty($depends) && count(array_intersect($this->enabledExtensions, $depends)) == count($depends)) {
+                    throw new InvalidConfigException(
+                        "The \"{$name}\" event requires " . explode(', ', $depends) . " extensions to be enabled."
+                    );
+                }
+
+                // Register event
+                $this->view->registerJs(
+                    "jQuery.ias().on('{$name}', {$this->$eventName});",
+                    View::POS_READY,
+                    "{$this->id}_ias_{$name}"
+                );
+            }
+        }
     }
 }
