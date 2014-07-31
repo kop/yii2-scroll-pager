@@ -358,7 +358,7 @@ class ScrollPager extends Widget
                 // Make sure dependencies are met
                 if (!$this->checkEnabledExtensions($depends)) {
                     throw new InvalidConfigException(
-                        "Extension {$name} requires " . explode(', ', $depends) . " extensions to be enabled."
+                        "Extension {$name} requires " . implode(', ', $depends) . " extensions to be enabled."
                     );
                 }
 
@@ -392,7 +392,7 @@ class ScrollPager extends Widget
                 // Make sure dependencies are met
                 if (!$this->checkEnabledExtensions($depends)) {
                     throw new InvalidConfigException(
-                        "The \"{$name}\" event requires " . explode(', ', $depends) . " extensions to be enabled."
+                        "The \"{$name}\" event requires " . implode(', ', $depends) . " extensions to be enabled."
                     );
                 }
 
@@ -415,6 +415,9 @@ class ScrollPager extends Widget
     protected function checkEnabledExtensions($extensions)
     {
         $extensions = (array) $extensions;
-        return (!empty($extensions) && count(array_intersect($this->enabledExtensions, $extensions)) == count($extensions));
+        if(empty($extensions))
+            return true;
+        else
+            return (count(array_intersect($this->enabledExtensions, $extensions)) == count($extensions));
     }
 }
