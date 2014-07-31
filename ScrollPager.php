@@ -415,9 +415,10 @@ class ScrollPager extends Widget
     protected function checkEnabledExtensions($extensions)
     {
         $extensions = (array) $extensions;
-        if(empty($extensions))
+        if (empty($extensions)) {
             return true;
-        else
+        } else {
             return (count(array_intersect($this->enabledExtensions, $extensions)) == count($extensions));
+        }
     }
 }
