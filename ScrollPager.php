@@ -278,7 +278,7 @@ class ScrollPager extends Widget
                 'name' => self::EXTENSION_PAGING
             ],
             [
-                'name' => self::EXTENSION_TRIGGER,
+                'name' => self::EXTENSION_SPINNER,
                 'options' =>
                     !empty($this->spinnerSrc)
                         ? ['html' => $this->spinnerTemplate, 'src' => $this->spinnerSrc]
