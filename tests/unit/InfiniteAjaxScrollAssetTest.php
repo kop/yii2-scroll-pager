@@ -12,7 +12,7 @@ use kop\y2sp\assets\InfiniteAjaxScrollAsset;
  * @link      http://kop.github.io/yii2-scroll-pager Y2SP project page.
  * @license   https://github.com/kop/yii2-scroll-pager/blob/master/LICENSE.md MIT
  *
- * @author    Ivan Koptiev <ikoptev@gmail.com>
+ * @author    Ivan Koptiev <ivan.koptiev@codex.systems>
  */
 class InfiniteAjaxScrollAssetTest extends Test
 {
