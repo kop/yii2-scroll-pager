@@ -35,7 +35,7 @@ use Yii;
  * @license   https://github.com/kop/yii2-scroll-pager/blob/master/LICENSE.md MIT
  *
  * @author    Ivan Koptiev <ikoptev@gmail.com>
- * @version   2.1.2
+ * @version   2.2
  */
 class ScrollPager extends Widget
 {
@@ -140,6 +140,12 @@ class ScrollPager extends Widget
      * Make sure there is only one element that matches the selector.
      */
     public $historyPrev = '.previous';
+
+    /**
+     * @var string $overflowContainer A selector for "div" HTML element to use as an overflow container.
+     * @see http://infiniteajaxscroll.com/examples/overflow.html
+     */
+    public $overflowContainer;
 
     /**
      * @var string|JsExpression $eventOnScroll Triggered when the visitors scrolls.
@@ -266,11 +272,10 @@ class ScrollPager extends Widget
             'delay' => $this->delay,
             'negativeMargin' => $this->negativeMargin
         ]);
-        $this->view->registerJs(
-            "var {$this->id}_ias = jQuery.ias({$pluginSettings});",
-            View::POS_READY,
-            "{$this->id}_ias_main"
-        );
+        $initString = empty($this->overflowContainer)
+            ? "var {$this->id}_ias = jQuery.ias({$pluginSettings});"
+            : "var {$this->id}_ias = jQuery('{$this->overflowContainer}').ias({$pluginSettings});";
+        $this->view->registerJs($initString, View::POS_READY, "{$this->id}_ias_main");
 
         // Register IAS extensions
         $this->registerExtensions([

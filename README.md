@@ -157,6 +157,12 @@ The href attribute of this element will be used to get the items from the previo
 
 Make sure there is only one element that matches the selector.
 
+#### `overflowContainer`
+
+*Default:* null
+
+A selector for `div` HTML element to use as an overflow container.
+
 ### Plugin Events
 
 #### `eventOnScroll`
