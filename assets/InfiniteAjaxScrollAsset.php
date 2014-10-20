@@ -21,7 +21,7 @@ class InfiniteAjaxScrollAsset extends AssetBundle
      * @var array List of bundle class names that this bundle depends on.
      */
     public $depends = [
-        'yii\web\JqueryAsset'
+        'yii\web\JqueryAsset',
     ];
 
     /**
@@ -29,22 +29,15 @@ class InfiniteAjaxScrollAsset extends AssetBundle
      */
     public function init()
     {
-        if (!YII_DEBUG) {
-            $this->sourcePath = '@vendor/kop/yii2-scroll-pager/assets/infinite-ajax-scroll';
-            $this->js = [
-                'jquery-ias.min.js'
-            ];
-        } else {
-            $this->sourcePath = '@vendor/webcreate/jquery-ias/src';
-            $this->js = [
-                'callbacks.js',
-                'jquery-ias.js',
-                'extension/history.js',
-                'extension/noneleft.js',
-                'extension/paging.js',
-                'extension/spinner.js',
-                'extension/trigger.js'
-            ];
-        }
+        $this->sourcePath = '@vendor/webcreate/jquery-ias/src';
+        $this->js = [
+            'callbacks.js',
+            'jquery-ias.js',
+            'extension/history.js',
+            'extension/noneleft.js',
+            'extension/paging.js',
+            'extension/spinner.js',
+            'extension/trigger.js'
+        ];
     }
 }
