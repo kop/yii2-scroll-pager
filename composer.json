@@ -12,11 +12,10 @@
     "authors": [
         {
             "name": "Ivan Koptiev",
-            "email": "ikoptev@gmail.com",
+            "email": "ivan.koptiev@codex.systems",
             "role": "Developer"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": "*",
