@@ -3,6 +3,7 @@
 namespace kop\y2sp;
 
 use kop\y2sp\assets\InfiniteAjaxScrollAsset;
+use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Widget;
 use yii\helpers\ArrayHelper;
@@ -11,7 +12,6 @@ use yii\i18n\PhpMessageSource;
 use yii\web\JsExpression;
 use yii\web\View;
 use yii\widgets\LinkPager;
-use Yii;
 
 /**
  * ScrollPager turns your regular paginated page into an infinite scrolling page using AJAX.
@@ -240,7 +240,7 @@ class ScrollPager extends Widget
         ]);
 
         // Register required assets
-        InfiniteAjaxScrollAsset::register($this->view);
+        $this->registerAssets();
 
         // Set default trigger text if not set
         if ($this->triggerText === null) {
@@ -341,6 +341,17 @@ class ScrollPager extends Widget
     }
 
     /**
+     * Register required asset bundles.
+     *
+     * You can override this method in case if you want to use your own JQuery Infinite Ajax Scroll plugin files
+     * (for example, some forked plugin version).
+     */
+    protected function registerAssets()
+    {
+        InfiniteAjaxScrollAsset::register($this->view);
+    }
+
+    /**
      * Register jQuery IAS extensions.
      *
      * This method takes jQuery IAS extensions definition as a parameter and registers this extensions.
@@ -419,7 +430,7 @@ class ScrollPager extends Widget
      */
     protected function checkEnabledExtensions($extensions)
     {
-        $extensions = (array) $extensions;
+        $extensions = (array)$extensions;
         if (empty($extensions)) {
             return true;
         } else {
