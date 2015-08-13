@@ -6,5 +6,4 @@
 .idea/
 vendor/
 composer.lock
-tests/_log/*
 tests/_output/*

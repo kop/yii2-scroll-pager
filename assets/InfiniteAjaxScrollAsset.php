@@ -13,7 +13,6 @@ use yii\web\AssetBundle;
  * @license   https://github.com/kop/yii2-scroll-pager/blob/master/LICENSE.md MIT
  *
  * @author    Ivan Koptiev <ivan.koptiev@codex.systems>
- * @version   2.2
  */
 class InfiniteAjaxScrollAsset extends AssetBundle
 {

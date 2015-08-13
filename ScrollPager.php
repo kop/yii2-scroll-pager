@@ -35,7 +35,6 @@ use yii\widgets\LinkPager;
  * @license   https://github.com/kop/yii2-scroll-pager/blob/master/LICENSE.md MIT
  *
  * @author    Ivan Koptiev <ivan.koptiev@codex.systems>
- * @version   2.2
  */
 class ScrollPager extends Widget
 {
