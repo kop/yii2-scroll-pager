@@ -73,6 +73,11 @@ class ScrollPager extends Widget
      * Make sure the elements are inside the container element.
      */
     public $item = '.item';
+    
+    /**
+     * @var string $paginationSelector Enter the selector of the element containing the pagination
+     */
+    public $paginationSelector = '.list-view .pagination';
 
     /**
      * @var int $delay Minimal number of milliseconds to stay in a loading state.
@@ -266,7 +271,7 @@ class ScrollPager extends Widget
         $pluginSettings = Json::encode([
             'container' => $this->container,
             'item' => $this->item,
-            'pagination' => "{$this->container} .pagination",
+            'pagination' => $this->paginationSelector,
             'next' => '.next a',
             'delay' => $this->delay,
             'negativeMargin' => $this->negativeMargin
