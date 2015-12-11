@@ -1,9 +1,8 @@
-#==============================================================#
-# Composer dependencies are used for development comfort only. #
-#       They should always be ignored in the repository.       #
-#===============================================================
-
+# IDE files
 .idea/
+
+# Composer dependencies
 vendor/
-composer.lock
+
+# Automated tests output
 tests/_output/*
