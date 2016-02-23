@@ -73,6 +73,13 @@ class ScrollPager extends Widget
      * Make sure the elements are inside the container element.
      */
     public $item = '.item';
+    
+    /**
+     * @var string $next Enter the selector of the link element that links to the next page. 
+     * The href attribute of this element will be used to get the items from the next page. 
+     * Make sure there is only one(1) element that matches the selector.
+     */
+    public $next = '.next a';
 
     /**
      * @var int $delay Minimal number of milliseconds to stay in a loading state.
@@ -267,7 +274,7 @@ class ScrollPager extends Widget
             'container' => $this->container,
             'item' => $this->item,
             'pagination' => "{$this->container} .pagination",
-            'next' => '.next a',
+            'next' => $this->next,
             'delay' => $this->delay,
             'negativeMargin' => $this->negativeMargin
         ]);
