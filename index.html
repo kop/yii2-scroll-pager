@@ -1,38 +1,26 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Yii2-scroll-pager : Infinite AJAX scrolling for Yii2 ListView widget">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Yii2-scroll-pager</title>
+    <meta charset="UTF-8">
+    <title>Yii2-scroll-pager by kop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
+    <section class="page-header">
+      <h1 class="project-name">Yii2-scroll-pager</h1>
+      <h2 class="project-tagline">Infinite AJAX scrolling for Yii2 ListView widget</h2>
+      <a href="https://github.com/kop/yii2-scroll-pager" class="btn">View on GitHub</a>
+      <a href="https://github.com/kop/yii2-scroll-pager/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/kop/yii2-scroll-pager/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/kop/yii2-scroll-pager">View on GitHub</a>
-
-          <h1 id="project_title">Yii2-scroll-pager</h1>
-          <h2 id="project_tagline">Infinite AJAX scrolling for Yii2 ListView widget</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/kop/yii2-scroll-pager/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/kop/yii2-scroll-pager/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>
-<a id="yii2-scroll-pager" class="anchor" href="#yii2-scroll-pager" aria-hidden="true"><span class="octicon octicon-link"></span></a>Yii2 Scroll Pager</h1>
+    <section class="main-content">
+      <h1>
+<a id="yii2-scroll-pager" class="anchor" href="#yii2-scroll-pager" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Yii2 Scroll Pager</h1>
 
 <p><a href="http://kop.github.io/yii2-scroll-pager">Yii2 Scroll Pager (Y2SP)</a> turns your regular paginated page into an
 infinite scrolling page using AJAX.</p>
@@ -49,7 +37,7 @@ infinite scrolling page using AJAX.</p>
 <a href="https://packagist.org/packages/kop/yii2-scroll-pager"><img src="https://poser.pugx.org/kop/yii2-scroll-pager/license.svg" alt="License"></a></p>
 
 <h2>
-<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h2>
 
 <ul>
 <li>Yii 2.0</li>
@@ -57,7 +45,7 @@ infinite scrolling page using AJAX.</p>
 </ul>
 
 <h2>
-<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
 
 <p>The preferred way to install this extension is through <a href="http://getcomposer.org/">Composer</a>.</p>
 
@@ -72,26 +60,26 @@ infinite scrolling page using AJAX.</p>
 <p>to the <code>require</code> section of your <code>composer.json</code> file.</p>
 
 <h2>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
 <p>Just pass the ScrollPager class name to the ListView <code>pager</code> configuration.
 Make sure that items in your list have some classes that can be used as JavaScript selectors.</p>
 
-<div class="highlight highlight-php"><pre><span class="pl-s2"><span class="pl-s3">echo</span> <span class="pl-s3">ListView</span><span class="pl-k">::</span>widget([</span>
-<span class="pl-s2">     <span class="pl-s1"><span class="pl-pds">'</span>dataProvider<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-vo">$dataProvider</span>,</span>
-<span class="pl-s2">     <span class="pl-s1"><span class="pl-pds">'</span>itemOptions<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> [<span class="pl-s1"><span class="pl-pds">'</span>class<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s1"><span class="pl-pds">'</span>item<span class="pl-pds">'</span></span>],</span>
-<span class="pl-s2">     <span class="pl-s1"><span class="pl-pds">'</span>itemView<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s1"><span class="pl-pds">'</span>_item_view<span class="pl-pds">'</span></span>,</span>
-<span class="pl-s2">     <span class="pl-s1"><span class="pl-pds">'</span>pager<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> [<span class="pl-s1"><span class="pl-pds">'</span>class<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s3">\kop\y2sp\</span><span class="pl-s3">ScrollPager</span><span class="pl-k">::</span>className()]</span>
-<span class="pl-s2">]);</span></pre></div>
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-c1">ListView</span><span class="pl-k">::</span>widget([</span>
+<span class="pl-s1">     <span class="pl-s"><span class="pl-pds">'</span>dataProvider<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-smi">$dataProvider</span>,</span>
+<span class="pl-s1">     <span class="pl-s"><span class="pl-pds">'</span>itemOptions<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> [<span class="pl-s"><span class="pl-pds">'</span>class<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>item<span class="pl-pds">'</span></span>],</span>
+<span class="pl-s1">     <span class="pl-s"><span class="pl-pds">'</span>itemView<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>_item_view<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">     <span class="pl-s"><span class="pl-pds">'</span>pager<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> [<span class="pl-s"><span class="pl-pds">'</span>class<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">\kop\y2sp\</span><span class="pl-c1">ScrollPager</span><span class="pl-k">::</span>className()]</span>
+<span class="pl-s1">]);</span></pre></div>
 
 <h2>
-<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h2>
 
 <h3>
-<a id="general-options" class="anchor" href="#general-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>General Options</h3>
+<a id="general-options" class="anchor" href="#general-options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>General Options</h3>
 
 <h4>
-<a id="container" class="anchor" href="#container" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>container</code>
+<a id="container" class="anchor" href="#container" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>container</code>
 </h4>
 
 <p><em>Default:</em> ".list-view"</p>
@@ -99,7 +87,7 @@ Make sure that items in your list have some classes that can be used as JavaScri
 <p>Enter the selector of the element containing your items that you want to paginate.</p>
 
 <h4>
-<a id="item" class="anchor" href="#item" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>item</code>
+<a id="item" class="anchor" href="#item" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>item</code>
 </h4>
 
 <p><em>Default:</em> ".item"</p>
@@ -107,7 +95,7 @@ Make sure that items in your list have some classes that can be used as JavaScri
 <p>Enter the selector of the element that each item has. Make sure the elements are inside the container element.</p>
 
 <h4>
-<a id="delay" class="anchor" href="#delay" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>delay</code>
+<a id="delay" class="anchor" href="#delay" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>delay</code>
 </h4>
 
 <p><em>Default:</em> 600</p>
@@ -115,7 +103,7 @@ Make sure that items in your list have some classes that can be used as JavaScri
 <p>Minimal number of milliseconds to stay in a loading state.</p>
 
 <h4>
-<a id="negativemargin" class="anchor" href="#negativemargin" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>negativeMargin</code>
+<a id="negativemargin" class="anchor" href="#negativemargin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>negativeMargin</code>
 </h4>
 
 <p><em>Default:</em> 10</p>
@@ -128,10 +116,10 @@ The negativeMargin will be added to the items' offset, giving you the ability to
 <p>Setting a negativeMargin of 250 means that IAS will start loading 250 pixel before the last item has scrolled into view.</p>
 
 <h3>
-<a id="extensions" class="anchor" href="#extensions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extensions</h3>
+<a id="extensions" class="anchor" href="#extensions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Extensions</h3>
 
 <h4>
-<a id="enabledextensions" class="anchor" href="#enabledextensions" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>enabledExtensions</code>
+<a id="enabledextensions" class="anchor" href="#enabledextensions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>enabledExtensions</code>
 </h4>
 
 <p><em>Default:</em>
@@ -148,10 +136,10 @@ Array(
 <p>The list of the enabled plugin extensions.</p>
 
 <h3>
-<a id="extension-options" class="anchor" href="#extension-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extension Options</h3>
+<a id="extension-options" class="anchor" href="#extension-options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Extension Options</h3>
 
 <h4>
-<a id="triggertext" class="anchor" href="#triggertext" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>triggerText</code>
+<a id="triggertext" class="anchor" href="#triggertext" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>triggerText</code>
 </h4>
 
 <p><em>Default:</em> "Load more items"</p>
@@ -159,7 +147,7 @@ Array(
 <p>Text of trigger the link.</p>
 
 <h4>
-<a id="triggertemplate" class="anchor" href="#triggertemplate" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>triggerTemplate</code>
+<a id="triggertemplate" class="anchor" href="#triggertemplate" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>triggerTemplate</code>
 </h4>
 
 <p><em>Default:</em> "<code>&lt;div class="ias-trigger" style="text-align: center; cursor: pointer;"&gt;&lt;a&gt;{text}&lt;/a&gt;&lt;/div&gt;</code>"</p>
@@ -167,7 +155,7 @@ Array(
 <p>Allows you to override the trigger html template.</p>
 
 <h4>
-<a id="triggeroffset" class="anchor" href="#triggeroffset" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>triggerOffset</code>
+<a id="triggeroffset" class="anchor" href="#triggeroffset" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>triggerOffset</code>
 </h4>
 
 <p><em>Default:</em> 0</p>
@@ -177,7 +165,7 @@ Array(
 <p>For example: if you set the offset to 2, the pages 2 and 3 (page 1 is always shown) would load automatically and for every subsequent page the user has to press the trigger to load it.</p>
 
 <h4>
-<a id="spinnersrc" class="anchor" href="#spinnersrc" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>spinnerSrc</code>
+<a id="spinnersrc" class="anchor" href="#spinnersrc" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>spinnerSrc</code>
 </h4>
 
 <p><em>Default:</em> <img src="https://raw.githubusercontent.com/kop/yii2-scroll-pager/v1.0.2/assets/infinite-ajax-scroll/images/loader.gif" alt="Spinner Image"></p>
@@ -185,7 +173,7 @@ Array(
 <p>The src attribute of the spinner image.</p>
 
 <h4>
-<a id="spinnertemplate" class="anchor" href="#spinnertemplate" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>spinnerTemplate</code>
+<a id="spinnertemplate" class="anchor" href="#spinnertemplate" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>spinnerTemplate</code>
 </h4>
 
 <p><em>Default:</em> "<code>&lt;div class="ias-spinner" style="text-align: center;"&gt;&lt;img src="{src}"/&gt;&lt;/div&gt;</code>"</p>
@@ -193,7 +181,7 @@ Array(
 <p>Allows you to override the spinner html template.</p>
 
 <h4>
-<a id="nonelefttext" class="anchor" href="#nonelefttext" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>noneLeftText</code>
+<a id="nonelefttext" class="anchor" href="#nonelefttext" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>noneLeftText</code>
 </h4>
 
 <p><em>Default:</em> "You reached the end"</p>
@@ -201,7 +189,7 @@ Array(
 <p>Text of the "nothing left" message.</p>
 
 <h4>
-<a id="nonelefttemplate" class="anchor" href="#nonelefttemplate" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>noneLeftTemplate</code>
+<a id="nonelefttemplate" class="anchor" href="#nonelefttemplate" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>noneLeftTemplate</code>
 </h4>
 
 <p><em>Default:</em> "<code>&lt;div class="ias-noneleft" style="text-align: center;"&gt;{text}&lt;/div&gt;</code>"</p>
@@ -209,7 +197,7 @@ Array(
 <p>Allows you to override the "nothing left" message html template.</p>
 
 <h4>
-<a id="historyprev" class="anchor" href="#historyprev" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>historyPrev</code>
+<a id="historyprev" class="anchor" href="#historyprev" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>historyPrev</code>
 </h4>
 
 <p><em>Default:</em> ".previous"</p>
@@ -221,7 +209,7 @@ Array(
 <p>Make sure there is only one element that matches the selector.</p>
 
 <h4>
-<a id="overflowcontainer" class="anchor" href="#overflowcontainer" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>overflowContainer</code>
+<a id="overflowcontainer" class="anchor" href="#overflowcontainer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>overflowContainer</code>
 </h4>
 
 <p><em>Default:</em> null</p>
@@ -229,10 +217,10 @@ Array(
 <p>A selector for <code>div</code> HTML element to use as an overflow container.</p>
 
 <h3>
-<a id="plugin-events" class="anchor" href="#plugin-events" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugin Events</h3>
+<a id="plugin-events" class="anchor" href="#plugin-events" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Plugin Events</h3>
 
 <h4>
-<a id="eventonscroll" class="anchor" href="#eventonscroll" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>eventOnScroll</code>
+<a id="eventonscroll" class="anchor" href="#eventonscroll" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>eventOnScroll</code>
 </h4>
 
 <p><em>Default:</em> null</p>
@@ -240,7 +228,7 @@ Array(
 <p>Triggered when the visitors scrolls.</p>
 
 <h4>
-<a id="eventonload" class="anchor" href="#eventonload" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>eventOnLoad</code>
+<a id="eventonload" class="anchor" href="#eventonload" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>eventOnLoad</code>
 </h4>
 
 <p><em>Default:</em> null</p>
@@ -248,7 +236,7 @@ Array(
 <p>Triggered when a new url will be loaded from the server.</p>
 
 <h4>
-<a id="eventonloaded" class="anchor" href="#eventonloaded" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>eventOnLoaded</code>
+<a id="eventonloaded" class="anchor" href="#eventonloaded" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>eventOnLoaded</code>
 </h4>
 
 <p><em>Default:</em> null</p>
@@ -256,7 +244,7 @@ Array(
 <p>Triggered after a new page was loaded from the server.</p>
 
 <h4>
-<a id="eventonrender" class="anchor" href="#eventonrender" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>eventOnRender</code>
+<a id="eventonrender" class="anchor" href="#eventonrender" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>eventOnRender</code>
 </h4>
 
 <p><em>Default:</em> null</p>
@@ -264,7 +252,7 @@ Array(
 <p>Triggered before new items will be rendered.</p>
 
 <h4>
-<a id="eventonrendered" class="anchor" href="#eventonrendered" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>eventOnRendered</code>
+<a id="eventonrendered" class="anchor" href="#eventonrendered" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>eventOnRendered</code>
 </h4>
 
 <p><em>Default:</em> null</p>
@@ -272,7 +260,7 @@ Array(
 <p>Triggered after new items have rendered.</p>
 
 <h4>
-<a id="eventonnoneleft" class="anchor" href="#eventonnoneleft" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>eventOnNoneLeft</code>
+<a id="eventonnoneleft" class="anchor" href="#eventonnoneleft" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>eventOnNoneLeft</code>
 </h4>
 
 <p><em>Default:</em> null</p>
@@ -280,7 +268,7 @@ Array(
 <p>Triggered when there are no more pages left.</p>
 
 <h4>
-<a id="eventonnext" class="anchor" href="#eventonnext" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>eventOnNext</code>
+<a id="eventonnext" class="anchor" href="#eventonnext" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>eventOnNext</code>
 </h4>
 
 <p><em>Default:</em> null</p>
@@ -292,7 +280,7 @@ Array(
 <p>You can do this by returning false from your callback.</p>
 
 <h4>
-<a id="eventonready" class="anchor" href="#eventonready" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>eventOnReady</code>
+<a id="eventonready" class="anchor" href="#eventonready" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>eventOnReady</code>
 </h4>
 
 <p><em>Default:</em> null</p>
@@ -300,7 +288,7 @@ Array(
 <p>Triggered when IAS and all the extensions have been initialized.</p>
 
 <h4>
-<a id="eventonpagechange" class="anchor" href="#eventonpagechange" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>eventOnPageChange</code>
+<a id="eventonpagechange" class="anchor" href="#eventonpagechange" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>eventOnPageChange</code>
 </h4>
 
 <p><em>Default:</em> null</p>
@@ -308,47 +296,44 @@ Array(
 <p>Triggered when a used scroll to another page.</p>
 
 <h2>
-<a id="report" class="anchor" href="#report" aria-hidden="true"><span class="octicon octicon-link"></span></a>Report</h2>
+<a id="report" class="anchor" href="#report" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Report</h2>
 
 <ul>
 <li>Report any issues <a href="https://github.com/kop/yii2-scroll-pager/issues">on the GitHub</a>.</li>
 </ul>
 
 <h2>
-<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
 
 <p><strong>yii2-scroll-pager</strong> is released under the MIT License. See the bundled <code>LICENSE.md</code> for details.</p>
 
 <h2>
-<a id="resources" class="anchor" href="#resources" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resources</h2>
+<a id="resources" class="anchor" href="#resources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Resources</h2>
 
 <ul>
 <li><a href="http://kop.github.io/yii2-scroll-pager">Project Page</a></li>
 <li><a href="https://packagist.org/packages/kop/yii2-scroll-pager">Packagist Package</a></li>
 <li><a href="https://github.com/kop/yii2-scroll-pager">Source Code</a></li>
 </ul>
-      </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Yii2-scroll-pager maintained by <a href="https://github.com/kop">kop</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/kop/yii2-scroll-pager">Yii2-scroll-pager</a> is maintained by <a href="https://github.com/kop">kop</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
 
-              <script type="text/javascript">
+    </section>
+
+            <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
           <script type="text/javascript">
             try {
-              var pageTracker = _gat._getTracker("UA-57284399-1");
+              var pageTracker = _gat._getTracker("UA-57284399-3");
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
-
 
   </body>
 </html>
