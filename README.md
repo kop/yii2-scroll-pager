@@ -9,10 +9,9 @@ Y2SP works with a `Pagination` object which specifies the totally number of page
 Pager is build with help of [JQuery Infinite Ajax Scroll plugin](http://infiniteajaxscroll.com/).
 
 [![Latest Stable Version](https://poser.pugx.org/kop/yii2-scroll-pager/v/stable.svg)](https://packagist.org/packages/kop/yii2-scroll-pager)
-[![Build Status](https://travis-ci.org/kop/yii2-scroll-pager.svg?branch=master)](https://travis-ci.org/kop/yii2-scroll-pager)
 [![Code Climate](https://codeclimate.com/github/kop/yii2-scroll-pager.png)](https://codeclimate.com/github/kop/yii2-scroll-pager)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kop/yii2-scroll-pager/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/kop/yii2-scroll-pager/?branch=master)
-[![Version Eye](https://www.versioneye.com/php/kop:yii2-scroll-pager/badge.svg)](https://www.versioneye.com/php/kop:yii2-scroll-pager)
+[![Dependency Status](https://gemnasium.com/kop/yii2-scroll-pager.svg)](https://gemnasium.com/kop/yii2-scroll-pager)
 [![License](https://poser.pugx.org/kop/yii2-scroll-pager/license.svg)](https://packagist.org/packages/kop/yii2-scroll-pager)
 
 ## Requirements
