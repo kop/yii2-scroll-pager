@@ -66,6 +66,12 @@ Enter the selector of the element containing your items that you want to paginat
 
 Enter the selector of the element that each item has. Make sure the elements are inside the container element.
 
+#### `paginationSelector`
+
+*Default:* ".list-view .pagination"
+
+Enter the selector of the element containing the pagination.
+
 #### `next`
 
 *Default:* ".next a"
