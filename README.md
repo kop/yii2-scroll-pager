@@ -66,6 +66,14 @@ Enter the selector of the element containing your items that you want to paginat
 
 Enter the selector of the element that each item has. Make sure the elements are inside the container element.
 
+#### `next`
+
+*Default:* ".next a"
+
+Enter the selector of the link element that links to the next page.
+The href attribute of this element will be used to get the items from the next page.
+Make sure there is only one(1) element that matches the selector.
+
 #### `delay`
 
 *Default:* 600
