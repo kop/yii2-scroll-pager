@@ -3,6 +3,3 @@
 
 # Composer dependencies
 vendor/
-
-# Automated tests output
-tests/_output/*
