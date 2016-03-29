@@ -425,9 +425,9 @@ class ScrollPager extends Widget
 
                 // Register event
                 $this->view->registerJs(
-                    "jQuery.ias().on('{$name}', {$this->$eventName});",
+                    "{$this->id}_ias.on('{$name}', {$this->$eventName});",
                     View::POS_READY,
-                    "{$this->id}_ias_{$name}"
+                    "{$this->id}_ias_event_{$eventName}"
                 );
             }
         }
