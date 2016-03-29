@@ -60,8 +60,6 @@ echo ListView::widget([
 ```php
 echo GridView::widget([
      'dataProvider' => $dataProvider,
-     'itemOptions' => ['class' => 'item'],
-     'itemView' => '_item_view',
      'pager' => [
         'class' => \kop\y2sp\ScrollPager::className(),
         'container' => '.grid-view tbody',
