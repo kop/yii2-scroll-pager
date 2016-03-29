@@ -44,6 +44,8 @@ to the `require` section of your `composer.json` file.
 Just pass the ScrollPager class name to the ListView `pager` configuration.
 Make sure that items in your list have some classes that can be used as JavaScript selectors.
 
+### ListView
+
 ```php
 echo ListView::widget([
      'dataProvider' => $dataProvider,
@@ -53,6 +55,22 @@ echo ListView::widget([
 ]);
 ```
 
+### GridView
+
+```php
+echo GridView::widget([
+     'dataProvider' => $dataProvider,
+     'itemOptions' => ['class' => 'item'],
+     'itemView' => '_item_view',
+     'pager' => [
+        'class' => \kop\y2sp\ScrollPager::className(),
+        'container' => '.grid-view tbody',
+        'item' => 'tr',
+        'paginationSelector' => '.grid-view .pagination',
+        'triggerTemplate' => '<tr class="ias-trigger"><td colspan="100%" style="text-align: center"><a style="cursor: pointer">{text}</a></td></tr>',
+     ],
+]);
+```
 
 
 ## Configuration
