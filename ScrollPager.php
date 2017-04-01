@@ -114,6 +114,16 @@ class ScrollPager extends Widget
     public $triggerTemplate = '<div class="ias-trigger" style="text-align: center; cursor: pointer;"><a>{text}</a></div>';
 
     /**
+     * @var string $triggerTextPrev Text of trigger the link previous page.
+     */
+    public $triggerTextPrev;
+
+    /**
+     * @var string $triggerTemplatePrev Allows you to override the trigger html template for previous page link.
+     */
+    public $triggerTemplatePrev = '<div class="ias-trigger" style="text-align: center; cursor: pointer;"><a>{text}</a></div>';
+
+    /**
      * @var int $triggerOffset The number of pages which should load automatically.
      * After that the trigger is shown for every subsequent page.
      * <br><br>
@@ -305,7 +315,9 @@ class ScrollPager extends Widget
                 'options' => [
                     'text' => $this->triggerText,
                     'html' => $this->triggerTemplate,
-                    'offset' => $this->triggerOffset
+                    'offset' => $this->triggerOffset,
+                    'textPrev' => $this->triggerTextPrev,
+                    'htmlPrev' => $this->triggerTemplatePrev,
                 ]
             ],
             [

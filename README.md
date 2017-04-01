@@ -97,8 +97,10 @@ echo GridView::widget([
 
 | Option name  	     | Description  	| Default value |
 |---	             |---	            |---	        |
-| triggerText  	     | Text of trigger the link. | `Load more items` |
+| triggerText  	     | Text of the link. | `Load more items` |
 | triggerTemplate  	 | Allows you to override the trigger html template. | `<div class="ias-trigger" style="text-align: center; cursor: pointer;"><a>{text}</a></div>` |
+| triggerTextPrev  	 | Text of the link that will load the previous page. | `Load previous items` |
+| triggerTemplatePrev| Allows you to override the trigger html template. | `<div class="ias-trigger" style="text-align: center; cursor: pointer;"><a>{text}</a></div>` |
 | triggerOffset  	 | The number of pages which should load automatically. After that the trigger is shown for every subsequent page.<br><br> *Example:* if you set the offset to 2, the pages 2 and 3 (page 1 is always shown) would load automatically and for every subsequent page the user has to press the trigger to load it. | `0` |
 | spinnerSrc  	     | The src attribute of the spinner image. | ![Spinner Image](https://raw.githubusercontent.com/kop/yii2-scroll-pager/v1.0.2/assets/infinite-ajax-scroll/images/loader.gif) |
 | spinnerTemplate  	 | Allows you to override the spinner html template. | `<div class="ias-spinner" style="text-align: center;"><img src="{src}"/></div>` |
