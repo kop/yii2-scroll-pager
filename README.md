@@ -55,6 +55,44 @@ echo ListView::widget([
 ]);
 ```
 
+### ListView (Advanced example)
+
+Here you can see how you can use variable `{{ias}}` for events. In this example are added the new settings `linkPager`, `linkPagerOptions` and `linkPagerWrapperTemplate`.
+```php
+echo ListView::widget([
+     'options' => ['class' => 'list-view'],
+     'dataProvider' => $listDataProvider,
+     'itemOptions' => ['tag' => false],
+     'itemView' => '_list_item',
+     'summary' => '',
+     'layout' => '{items}{pager}',
+     'pager' => [
+          'class' => \kop\y2sp\ScrollPager::className(),
+          'item' => 'article',
+          'next' => '.next a',
+          'paginationSelector' => '.list-view .pagination',
+          'triggerText' => Yii::t('app', 'Show more'),
+          'triggerTemplate' => '<span class="reveal-btn">{text}</span>',
+          'noneLeftText' => '',
+          'noneLeftTemplate' => '',
+          'spinnerSrc' => '',
+          'spinnerTemplate' => '',
+          'linkPager'     => [
+               'prevPageCssClass' => 'btn-link prev',
+               'nextPageCssClass' => 'btn-link next',
+               'prevPageLabel' => '<span class="prev-page">prev</span>',
+               'nextPageLabel' => '<span class="next-page">next</span>',
+          ],
+          'linkPagerOptions'     => [
+               'class' => 'pagination',
+          ],
+          'linkPagerWrapperTemplate' => '<div class="button-news-more"><div class="wrapper"><div class="paging">{pager}</div></div></div>',
+          'eventOnPageChange' => 'function() {{{ias}}.hidePagination();}',
+          'eventOnReady' => 'function() {{{ias}}.restorePagination();}',
+     ],
+]);
+```
+
 ### GridView
 
 ```php
