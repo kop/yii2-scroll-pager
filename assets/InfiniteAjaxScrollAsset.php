@@ -16,20 +16,9 @@ use yii\web\AssetBundle;
  */
 class InfiniteAjaxScrollAsset extends AssetBundle
 {
-    /**
-     * @var array List of bundle class names that this bundle depends on.
-     */
-    public $depends = [
-        'yii\web\JqueryAsset',
-    ];
+    public $sourcePath = '@vendor/webcreate/jquery-ias/src';
 
-    /**
-     * @inheritdoc
-     */
-    public function init()
-    {
-        $this->sourcePath = '@vendor/webcreate/jquery-ias/src';
-        $this->js = [
+    public $js = [
             'callbacks.js',
             'jquery-ias.js',
             'extension/history.js',
@@ -37,6 +26,14 @@ class InfiniteAjaxScrollAsset extends AssetBundle
             'extension/paging.js',
             'extension/spinner.js',
             'extension/trigger.js'
-        ];
-    }
+    ];
+    
+    /**
+     * @var array List of bundle class names that this bundle depends on.
+     */
+    public $depends = [
+        'yii\web\JqueryAsset',
+    ];
+
+    
 }
