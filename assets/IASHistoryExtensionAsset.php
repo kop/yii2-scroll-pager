@@ -6,7 +6,7 @@ use yii\web\AssetBundle;
 
 
 /**
- * Class SpinnerExtensionAsset
+ * Class IASHistoryExtensionAsset
  * @package kop\y2sp\assets
  */
 class IASHistoryExtensionAsset extends AssetBundle

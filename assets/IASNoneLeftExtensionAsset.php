@@ -6,7 +6,7 @@ use yii\web\AssetBundle;
 
 
 /**
- * Class SpinnerExtensionAsset
+ * Class IASNoneLeftExtensionAsset
  * @package kop\y2sp\assets
  */
 class IASNoneLeftExtensionAsset extends AssetBundle
