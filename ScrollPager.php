@@ -409,6 +409,7 @@ class ScrollPager extends Widget
                         "Extension {$name} requires " . implode(', ', $depends) . " extensions to be enabled."
                     );
                 }
+                $this->view->registerAssetBundle("kop\y2sp\assets\\{$name}Asset");
 
                 // Register extension
                 $options = Json::encode($options);
