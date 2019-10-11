@@ -232,16 +232,16 @@ class ScrollPager extends Widget
      */
     public $pagination;
 
-	/**
-	 * @var array The options for yii\widgets\LinkPager.
-	 */
-	public $linkPager = [];
-	public $linkPagerOptions;
+    /**
+     * @var array The options for yii\widgets\LinkPager.
+     */
+    public $linkPager = [];
+    public $linkPagerOptions;
 
-	/**
-	 * @var $linkPagerWrapper string Wrapper template for pagination.
-	 */
-	public $linkPagerWrapperTemplate = '{pager}';
+    /**
+     * @var $linkPagerWrapper string Wrapper template for pagination.
+     */
+    public $linkPagerWrapperTemplate = '{pager}';
 
     /**
      * Initializes the pager.
@@ -274,13 +274,12 @@ class ScrollPager extends Widget
             $this->noneLeftText = Yii::t('kop\y2sp', 'You reached the end');
         }
 
-		// Set default class for pagination
-		if ($this->linkPagerOptions === null) {
-			$this->linkPagerOptions = ['class' => 'pagination hidden'];
-		}
-		elseif (!isset($this->linkPagerOptions['class'])) {
-			$this->linkPagerOptions['class'] = 'pagination hidden';
-		}
+        // Set default class for pagination
+        if ($this->linkPagerOptions === null) {
+            $this->linkPagerOptions = ['class' => 'pagination hidden'];
+        } elseif (!isset($this->linkPagerOptions['class'])) {
+            $this->linkPagerOptions['class'] = 'pagination hidden';
+        }
     }
 
     /**
@@ -288,8 +287,8 @@ class ScrollPager extends Widget
      *
      * This overrides the parent implementation by initializing jQuery IAS and displaying the generated page buttons.
      *
-     * @throws \yii\base\InvalidConfigException
      * @return mixed
+     * @throws \yii\base\InvalidConfigException
      */
     public function run()
     {
@@ -303,9 +302,11 @@ class ScrollPager extends Widget
             'negativeMargin' => $this->negativeMargin
         ]);
         $initString = empty($this->overflowContainer)
-            ? "var {$this->id}_ias = jQuery.ias({$pluginSettings});"
-            : "var {$this->id}_ias = jQuery('{$this->overflowContainer}').ias({$pluginSettings});";
-		$this->view->registerJs($initString, View::POS_READY, "{$this->id}_ias_main");
+            ? "if(typeof window.{$this->id}_ias === 'object') { window.{$this->id}_ias.reinitialize() }
+             else { window.{$this->id}_ias = jQuery.ias({$pluginSettings}); };"
+            : "if(typeof window.{$this->id}_ias === 'object') { window.{$this->id}_ias.reinitialize() }
+             else { window.{$this->id}_ias = jQuery('{$this->overflowContainer}').ias({$pluginSettings}); };";
+        $this->view->registerJs($initString, View::POS_READY, "{$this->id}_ias_main");
 
         // Register IAS extensions
         $this->registerExtensions([
@@ -361,15 +362,15 @@ class ScrollPager extends Widget
             ]
         ]);
 
-		// Render pagination links with wrapper
-		echo str_replace(
-			'{pager}',
-			LinkPager::widget([
-				'pagination' => $this->pagination,
-				'options' => $this->linkPagerOptions,
-			] + $this->linkPager),
-			$this->linkPagerWrapperTemplate
-		);
+        // Render pagination links with wrapper
+        echo str_replace(
+            '{pager}',
+            LinkPager::widget([
+                    'pagination' => $this->pagination,
+                    'options' => $this->linkPagerOptions,
+                ] + $this->linkPager),
+            $this->linkPagerWrapperTemplate
+        );
     }
 
     /**
@@ -413,8 +414,16 @@ class ScrollPager extends Widget
 
                 // Register extension
                 $options = Json::encode($options);
-                $this->view->registerJs(
-                    "{$this->id}_ias.extension(new {$name}({$options}));",
+                $this->view->registerJs(<<<JS
+ ;(function() {
+  if((window.{$this->id}_ias.extensions.map(function(item) {return item.constructor.name;}).indexOf('$name')) === -1) {
+      // prevent duplicate plugin registration
+        window.{$this->id}_ias.extension(new $name($options));
+    };
+}
+)();
+JS
+                    ,
                     View::POS_READY,
                     "{$this->id}_ias_{$name}"
                 );
@@ -445,12 +454,12 @@ class ScrollPager extends Widget
                     );
                 }
 
-				// Replace the variable template
-				$callback = str_replace('{{ias}}', "{$this->id}_ias", $this->$eventName);
+                // Replace the variable template
+                $callback = str_replace('{{ias}}', "{$this->id}_ias", $this->$eventName);
 
                 // Register event
                 $this->view->registerJs(
-                    "{$this->id}_ias.on('{$name}', {$callback});",
+                    "window.{$this->id}_ias.on('{$name}', {$callback});",
                     View::POS_READY,
                     "{$this->id}_ias_event_{$eventName}"
                 );
