@@ -143,6 +143,8 @@ echo GridView::widget([
 | noneLeftText  	 | Text of the "nothing left" message. | `You reached the end` |
 | noneLeftTemplate   | Allows you to override the "nothing left" message html template. | `<div class="ias-noneleft" style="text-align: center;">{text}</div>` |
 | historyPrev  	     | The selector of the link element that links to the previous page.<br> The href attribute of this element will be used to get the items from the previous page.<br> Make sure there is only one element that matches the selector. | `.previous` |
+| historyPrevText  	     | Text of previous page trigger. | `Load previous items` |
+| historyPrevTemplate  	 | Allows you to override the previous trigger html template. | `<div class="ias-trigger ias-trigger-prev" style="text-align: center; cursor: pointer;"><a>{text}</a></div>'` |
 | overflowContainer  | A selector for `div` HTML element to use as an overflow container. | `null` |
 
 
