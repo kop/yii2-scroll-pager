@@ -153,6 +153,17 @@ class ScrollPager extends Widget
     public $historyPrev = '.previous';
 
     /**
+     * @var null $historyPrevText Text of the "load previous" message.
+     * Default: "Load previous items".
+     */
+    public $historyPrevText = null;
+
+    /**
+     * @var string $historyPrevTemplate Allows you to override the "load previous" message html template.
+     */
+    public $historyPrevTemplate = '<div class="ias-trigger ias-trigger-prev" style="text-align: center; cursor: pointer;"><a>{text}</a></div>';
+
+    /**
      * @var string $overflowContainer A selector for "div" HTML element to use as an overflow container.
      * @see http://infiniteajaxscroll.com/examples/overflow.html
      */
@@ -274,6 +285,11 @@ class ScrollPager extends Widget
             $this->noneLeftText = Yii::t('kop\y2sp', 'You reached the end');
         }
 
+        // Set default "load previous" message text if not set
+        if ($this->historyPrevText === null) {
+            $this->historyPrevText = Yii::t('kop\y2sp', 'Load previous items');
+        }
+
         // Set default class for pagination
         if ($this->linkPagerOptions === null) {
             $this->linkPagerOptions = ['class' => 'pagination hidden'];
@@ -325,7 +341,9 @@ class ScrollPager extends Widget
                 'options' => [
                     'text' => $this->triggerText,
                     'html' => $this->triggerTemplate,
-                    'offset' => $this->triggerOffset
+                    'offset' => $this->triggerOffset,
+                    'textPrev' => $this->historyPrevText,
+                    'htmlPrev' => $this->historyPrevTemplate,
                 ]
             ],
             [
