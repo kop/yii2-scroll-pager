@@ -2,5 +2,5 @@
 
 return [
     'Load more items' => 'Завантажити більше записів',
-    'You reached the end' => 'Вы досягли кінця'
+    'You reached the end' => 'Ви досягли кінця'
 ];
