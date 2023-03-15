@@ -16,18 +16,10 @@
             "role": "Developer"
         }
     ],
-    "repositories":
-    [
-            {
-                "type": "vcs",
-                "url": "https://github.com/mikellez/yii2-scroll-pager"
-            }
-    ],
     "require": {
-        "php": ">=5.6.0",
+        "php": ">=5.4.0",
         "yiisoft/yii2": "*",
-        "webcreate/jquery-ias": "^2.2.1",
-        "kop/yii2-scroll-pager": "dev-custom"
+        "webcreate/jquery-ias": "^2.2.1"
     },
     "autoload": {
         "psr-4": {
